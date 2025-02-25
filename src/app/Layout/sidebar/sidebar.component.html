@@ -1,0 +1,51 @@
+<div class="fixed top-0 left-0 h-full bg-black w-1/6 pl-2 py-2 text-white transition-all duration-300 ease-in-out sidebar"
+     [ngClass]="{'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen}">
+  <div class="flex justify-between p-1">
+    <span>
+      <figure class=" flex justify-center items-center">
+        <img src="https://cdn-icons-png.flaticon.com/128/18618/18618852.png" class="invert h-10" alt="">
+        <p>Transportes Diaz</p>
+      </figure>
+    </span>
+      <button class="hover:scale-125 material-symbols-outlined" type="button" >
+        <mat-icon>close</mat-icon>
+      </button>
+  </div>
+  <ol class=" text-xl">
+    <li 
+      class="flex gap-2 hover:bg-white py-4 hover:text-black rounded-r-4xl hover:text-2xl" 
+      [routerLink]="['']"
+      > 
+      <mat-icon>home</mat-icon> Inicio
+    </li>
+    <li 
+      class="flex gap-2 hover:bg-white py-4 hover:text-black rounded-r-4xl hover:text-2xl" 
+      [routerLink]="['/camiones']" 
+      routerLinkActive="bg-slate-50 text-black"
+      > 
+      <mat-icon>directions_car</mat-icon> Camiones
+    </li>
+    <li 
+      class="flex gap-2 hover:bg-white py-4 hover:text-black rounded-r-4xl hover:text-2xl" 
+      [routerLink]="['/choferes']" 
+      routerLinkActive="bg-slate-50 text-black"
+      >
+      <mat-icon>person</mat-icon> Choferes
+    </li>
+    <li 
+      class="flex gap-2 hover:bg-white py-4 hover:text-black rounded-r-4xl hover:text-2xl" 
+      [routerLink]="['/clientes']" 
+      routerLinkActive="bg-slate-50 text-black"
+      >
+      <mat-icon>business</mat-icon> Clientes
+    </li>
+    <li 
+      class="flex gap-2 hover:bg-white py-4 hover:text-black rounded-r-4xl hover:text-2xl" 
+      [routerLink]="['/transportes']" 
+      routerLinkActive="bg-slate-50 text-black"
+      >
+      <mat-icon>gps_fixed</mat-icon> Transportes
+    </li>
+  </ol>
+  
+</div>
