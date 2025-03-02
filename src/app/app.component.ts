@@ -1,16 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { HeaderComponent } from "./Layout/header/header.component";
-import { SidebarComponent } from "./Layout/sidebar/sidebar.component";
+import { HeaderComponent } from './Layout/header/header.component';
 import { Subscription } from 'rxjs';
-
+import { ToastModule } from 'primeng/toast';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, SidebarComponent],
-  templateUrl: './app.component.html'
+  imports: [RouterOutlet, HeaderComponent, ToastModule],
+  templateUrl: './app.component.html',
+  standalone: true,
 })
 export class AppComponent implements OnInit, OnDestroy {
-  sidebarOpen: boolean = false; 
+  sidebarOpen: boolean = false;
 
   private routerSubscription: Subscription | undefined;
 
@@ -28,14 +28,5 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
     }
-  }
-
-
-  toggleSidebar() {
-    this.sidebarOpen = !this.sidebarOpen;
-  }
-
-  closeSidebar() {
-    this.sidebarOpen = false;
   }
 }

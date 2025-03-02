@@ -6,8 +6,8 @@ import { TravelsComponent } from './Feautures/Travels/Travels/Travels.component'
 import { MyClientsComponent } from './Feautures/MyClients/MyClients/MyClients.component';
 
 export const routes: Routes = [
-  {path:'clientes', component:MyClientsComponent},
-  {path:'transportes', component:TravelsComponent},
+  { path: 'clientes', component: MyClientsComponent },
+  { path: 'transportes', component: TravelsComponent },
   { path: 'choferes', component: DriversComponent },
   { path: 'camiones', component: TrucksComponent },
   { path: '', redirectTo: '', pathMatch: 'full' },

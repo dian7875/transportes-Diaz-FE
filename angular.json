@@ -27,8 +27,11 @@
               }
             ],
             "styles": [
+              "@ngxpert/hot-toast/styles.css",
               "@angular/material/prebuilt-themes/magenta-violet.css",
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/@ngxpert/hot-toast/src/styles/styles.css"
             ],
             "scripts": []
           },
@@ -82,10 +85,12 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "output": "/assets/"
               }
             ],
             "styles": [
+              "@ngxpert/hot-toast/styles.css",
               "@angular/material/prebuilt-themes/magenta-violet.css",
               "src/styles.css"
             ],

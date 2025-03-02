@@ -1,21 +1,13 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { Dialog } from '@angular/cdk/dialog';
+import { Component } from '@angular/core';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  standalone:true,
-  imports: [],
 })
 export class HeaderComponent {
-  @Output() toggleSidebarEvent = new EventEmitter<void>();
-
-  @Output() closeSidebarEvent = new EventEmitter<void>();
-
-  toggleSidebar() {
-    this.toggleSidebarEvent.emit();
-  }
-
-  closeSidebar() {
-    this.closeSidebarEvent.emit();
+  constructor(private dialog: Dialog) {}
+  openSidebar() {
+    this.dialog.open(SidebarComponent);
   }
 }
