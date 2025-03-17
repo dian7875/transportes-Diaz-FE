@@ -3,29 +3,33 @@ import { inject, Injectable } from '@angular/core';
 import { lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
-interface Truck {
-  plate: string;
+interface Driver {
+  id: number;
   name: string;
+  startDate: Date;
+  endDate?: Date;
+  status: boolean;
 }
 
-interface TruckResponse {
-  data: Truck[];
+interface DriverResponse {
+  data: Driver[];
   count: number;
 }
 
 @Injectable({
   providedIn: 'root',
 })
-export class TruckServiceService {
+export class DriversService {
   private http = inject(HttpClient);
 
   private API_URL = environment.API_URL;
-  async getTrucks(page: number): Promise<TruckResponse> {
+
+  async getDrivers(page: number): Promise<DriverResponse> {
     try {
       const params = new HttpParams().set('page', page.toString());
 
       const response = await lastValueFrom(
-        this.http.get<TruckResponse>(`${this.API_URL}/trucks`, { params })
+        this.http.get<DriverResponse>(`${this.API_URL}/drivers`, { params })
       );
       return response;
     } catch (error) {
@@ -34,10 +38,10 @@ export class TruckServiceService {
     }
   }
 
-  async addTruck(truck: Truck): Promise<{ message: string }> {
+  async addDriver(truck: Driver): Promise<{ message: string }> {
     try {
       const response = await lastValueFrom(
-        this.http.post<{ message: string }>(`${this.API_URL}/trucks`, truck)
+        this.http.post<{ message: string }>(`${this.API_URL}/drivers`, truck)
       );
       return response;
     } catch (error) {

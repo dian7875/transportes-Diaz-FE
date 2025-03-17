@@ -14,6 +14,20 @@ import { ButtonModule } from 'primeng/button';
 })
 export class SidebarComponent {
   constructor(private dialogRef:DialogRef<SidebarComponent>) { }
+
+  isDropdownexpenOpen = true;
+  isDropdownReportOpen = true;
+  isDropdownGeneralOpen = true;
+
+  toggleDropdownGeneral(){
+    this.isDropdownGeneralOpen = !this.isDropdownGeneralOpen;
+  }
+  toggleDropdownReport(){
+    this.isDropdownReportOpen = !this.isDropdownReportOpen;
+  }
+  toggleDropdownexpen(){
+    this.isDropdownexpenOpen = !this.isDropdownexpenOpen;
+  }
   
   closeSidebar(){
     this.dialogRef.close();

@@ -1,3 +1,12 @@
-<p>
-  Travels works!
-</p>
+<main class="w-full h-full p-4">
+  <div class="flex justify-between items-center mb-5">
+    <h3 class="text-4xl">Transportes</h3>
+    <p-button
+      severity="info"
+      type="button"
+      (onClick)="openModal()"
+      label="Añadir transporte"
+    />
+  </div>
+  <app-TravelList />
+</main>

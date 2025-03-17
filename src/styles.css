@@ -8,3 +8,28 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.custom input{
+  background-color: white;
+  color: black;
+}
+
+.custom span {
+  width: 100%;
+}
+
+.active {
+  background-color: #4CAF50; 
+  color: white;
+}
+
+.inactive {
+  background-color: #F44336; 
+  color: white;
+}
+
+
+.custom-select{
+  width: 100%;
+  background: white  !important;
+}

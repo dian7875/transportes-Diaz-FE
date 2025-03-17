@@ -1,40 +1,41 @@
 <p-table
-  [value]="trucks.data()?.data || []"
+  [value]="drivers.data()?.data || []"
   [paginator]="true"
   [rows]="8"
-  [totalRecords]="trucks.data()?.count || 0"
+  [totalRecords]="drivers.data()?.count || 0"
   [lazy]="true"
   [first]="(currentPage() - 1) * 8"
   selectionMode="single"
-  [(selection)]="selectedTrucks"
   [metaKeySelection]="metaKey"
-  dataKey="plate"
+  dataKey="id"
   [tableStyle]="{ 'min-width': '50rem' }"
   (onPage)="loadPage($event.first / $event.rows + 1)"
 >
   <ng-template pTemplate="header">
     <tr>
-      <th class="w-5xl">Placa</th>
+      <th class="w-5xl">Cedula</th>
       <th class="w-5xl">Nombre</th>
-      <th class="w-xl">Gastos asociados</th>
+      <th class="w-xl">Fecha de contratacion</th>
+      <th class="w-3xl">Estado</th>
       <th class="w-3xl">Acciones</th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-truck let-rowIndex="rowIndex">
-    <tr [pSelectableRow]="truck" [pSelectableRowIndex]="rowIndex">
-      <td>{{ truck.plate }}</td>
-      <td>{{ truck.name }}</td>
+  <ng-template pTemplate="body" let-driver let-rowIndex="rowIndex">
+    <tr [pSelectableRow]="driver" [pSelectableRowIndex]="rowIndex">
+      <td>{{ driver.id }}</td>
+      <td>{{ driver.name }}</td>
+      <td>{{ driver.startDate | date : "dd/MM/yyyy" }}</td>
       <td>
-        <span class=" underline hover:text-blue-400"> Ver gastos </span>
+        <div
+          [ngClass]="driver.status ? 'active' : 'inactive'"
+          class="p-1 rounded-md w-1/4 text-center"
+        >
+          {{ driver.status ? "Activo" : "Inactivo" }}
+        </div>
       </td>
+
       <td>
         <div class="p-button-group space-x-2 w-full">
-          <p-button
-            severity="success"
-            label="Añadir Gasto"
-            icon="pi pi-cart-plus"
-            (onClick)="openNewExpen(truck.plate)"
-          />
           <p-button severity="warn" label="Editar" icon="pi pi-file-edit" />
           <p-button severity="danger" label="Eliminar" icon="pi pi-trash" />
         </div>

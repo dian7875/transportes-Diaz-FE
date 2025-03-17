@@ -18,7 +18,6 @@ interface Truck {
   imports: [CommonModule, ReactiveFormsModule, ButtonModule],
 })
 export class NewTruckModalComponent {
-  private toastService = inject(HotToastService);
   queryClient = inject(QueryClient)
   truckForm: FormGroup;
 

@@ -1,3 +1,7 @@
-<p>
-  MyClients works!
-</p>
+<main class="w-full h-full p-4">
+  <div class="flex justify-between items-center mb-5">
+    <h3 class="text-4xl">Clientes</h3>
+    <p-button severity="info" type="button" (onClick)="openModal()" label="Añadir cliente"/>
+  </div>
+  <app-ClientList />
+</main>
