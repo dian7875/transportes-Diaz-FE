@@ -32,4 +32,36 @@ body {
 .custom-select{
   width: 100%;
   background: white  !important;
+  color: black !important;
+}
+
+.custom-select span{
+  width: 150px;
+  color: black !important;
+}
+
+.custom-select li span{
+  width: 100px;
+  color: white !important;
+}
+
+
+p-datepicker {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+p-datepicker .p-datepicker-clear-icon {
+  color: gray;
+  transform: translateX(-150%);
+}
+
+p-inputnumber .p-inputnumber-input{
+  background-color: white;
+  color: black;
+}
+
+p-checkbox .p-checkbox-box{
+ background-color: white; 
 }

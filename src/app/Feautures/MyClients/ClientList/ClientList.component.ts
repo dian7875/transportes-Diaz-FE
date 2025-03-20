@@ -16,7 +16,6 @@ export class ClientListComponent {
 
   constructor(private dialog: Dialog) {}
  
-
   displayedColumns: string[] = ['id', 'name'];
   selectedClient: any[] = [];
   metaKey: boolean = false;

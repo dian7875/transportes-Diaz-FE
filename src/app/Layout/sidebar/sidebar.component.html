@@ -18,115 +18,54 @@
   </div>
 
   <ul class="text-xl space-y-1.5 list-none">
-    <li>
-      <div
-        class="p-4 flex items-center justify-between text-surface-600 dark:text-surface-200 cursor-pointer p-ripple"
-        (click)="toggleDropdownGeneral()"
-      >
-        <span>General</span>
-        <mat-icon>{{
-          isDropdownGeneralOpen ? "expand_less" : "expand_more"
-        }}</mat-icon>
-      </div>
-
-      <ul [class.hidden]="!isDropdownGeneralOpen" class="mt-2">
-        <li
-          class="flex gap-2 ml-5 cursor-pointer hover:bg-white py-4 hover:text-black rounded-md hover:scale-110"
-          (click)="closeSidebar()"
-          [routerLink]="['']"
-        >
-          <mat-icon>home</mat-icon> Inicio
-        </li>
-        <li
-          class="flex gap-2 ml-5 cursor-pointer hover:bg-white py-4 hover:text-black rounded-md hover:scale-110"
-          (click)="closeSidebar()"
-          [routerLink]="['/camiones']"
-        >
-          <mat-icon>directions_car</mat-icon> Camiones
-        </li>
-        <li
-          class="flex gap-2 ml-5 cursor-pointer hover:bg-white py-4 hover:text-black rounded-md hover:scale-110"
-          (click)="closeSidebar()"
-          [routerLink]="['/choferes']"
-        >
-          <mat-icon>person</mat-icon> Choferes
-        </li>
-        <li
-          class="flex gap-2 ml-5 cursor-pointer hover:bg-white py-4 hover:text-black rounded-md hover:scale-110"
-          (click)="closeSidebar()"
-          [routerLink]="['/clientes']"
-        >
-          <mat-icon>business</mat-icon> Clientes
-        </li>
-        <li
-          class="flex gap-2 ml-5 cursor-pointer hover:bg-white py-4 hover:text-black rounded-md hover:scale-110"
-          (click)="closeSidebar()"
-          [routerLink]="['/transportes']"
-        >
-          <mat-icon>gps_fixed</mat-icon> Transportes
-        </li>
-      </ul>
+    <li
+      class="flex gap-2 ml-5 cursor-pointer hover:bg-white py-4 hover:text-black rounded-md hover:scale-110"
+      (click)="closeSidebar()"
+      [routerLink]="['']"
+    >
+      <mat-icon>home</mat-icon> Inicio
     </li>
-
-    <li>
-      <div
-        class="p-4 flex items-center justify-between text-surface-600 dark:text-surface-200 cursor-pointer p-ripple"
-        (click)="toggleDropdownReport()"
-      >
-        <Span>Reportes de viajes</Span>
-        <mat-icon>{{
-          isDropdownReportOpen ? "expand_less" : "expand_more"
-        }}</mat-icon>
-      </div>
-      <ul [class.hidden]="!isDropdownReportOpen" class="mt-2">
-        <li
-          class="flex gap-2 ml-5 cursor-pointer hover:bg-white py-4 hover:text-black rounded-md hover:scale-110"
-          (click)="closeSidebar()"
-        >
-          <mat-icon>local_shipping</mat-icon>
-          Por camion
-        </li>
-        <li
-          class="flex gap-2 ml-5 cursor-pointer hover:bg-white py-4 hover:text-black rounded-md hover:scale-110"
-          (click)="closeSidebar()"
-        >
-          <mat-icon>work</mat-icon> Por cliente
-        </li>
-        <li
-          class="flex gap-2 ml-5 cursor-pointer hover:bg-white py-4 hover:text-black rounded-md hover:scale-110"
-          (click)="closeSidebar()"
-        >
-          <mat-icon>event note icon</mat-icon>Reportes general
-        </li>
-      </ul>
+    <li
+      class="flex gap-2 ml-5 cursor-pointer hover:bg-white py-4 hover:text-black rounded-md hover:scale-110"
+      (click)="closeSidebar()"
+      [routerLink]="['/camiones']"
+    >
+      <mat-icon>directions_car</mat-icon> Camiones
     </li>
-    <li>
-      <div
-        class="p-4 flex items-center justify-between text-surface-600 dark:text-surface-200 cursor-pointer p-ripple"
-        (click)="toggleDropdownexpen()"
-      >
-        <span>Reporte de gastos</span>
-        <mat-icon>{{
-          isDropdownexpenOpen ? "expand_less" : "expand_more"
-        }}</mat-icon>
-      </div>
-
-      <ul [class.hidden]="!isDropdownexpenOpen" class="mt-2">
-        <li
-          class="flex gap-2 ml-5 hover:bg-white py-4 hover:text-black rounded-md hover:scale-110 cursor-pointer"
-          (click)="closeSidebar()"
-        >
-          <mat-icon>build</mat-icon>
-          Por camión
-        </li>
-        <li
-          class="flex gap-2 ml-5 hover:bg-white py-4 hover:text-black rounded-md hover:scale-110 cursor-pointer"
-          (click)="closeSidebar()"
-        >
-          <mat-icon>calendar_today</mat-icon>
-          Por Fechas
-        </li>
-      </ul>
+    <li
+      class="flex gap-2 ml-5 cursor-pointer hover:bg-white py-4 hover:text-black rounded-md hover:scale-110"
+      (click)="closeSidebar()"
+      [routerLink]="['/choferes']"
+    >
+      <mat-icon>person</mat-icon> Choferes
+    </li>
+    <li
+      class="flex gap-2 ml-5 cursor-pointer hover:bg-white py-4 hover:text-black rounded-md hover:scale-110"
+      (click)="closeSidebar()"
+      [routerLink]="['/clientes']"
+    >
+      <mat-icon>business</mat-icon> Clientes
+    </li>
+    <li
+      class="flex gap-2 ml-5 cursor-pointer hover:bg-white py-4 hover:text-black rounded-md hover:scale-110"
+      (click)="closeSidebar()"
+      [routerLink]="['/transportes']"
+    >
+      <mat-icon>gps_fixed</mat-icon> Transportes
+    </li>
+    <li
+      class="flex gap-2 ml-5 cursor-pointer hover:bg-white py-4 hover:text-black rounded-md hover:scale-110"
+      (click)="closeSidebar()"
+      [routerLink]="['/reportes']"
+    >
+      <mat-icon> bar_chart</mat-icon> Reportes
+    </li>
+    <li
+      class="flex gap-2 ml-5 cursor-pointer hover:bg-white py-4 hover:text-black rounded-md hover:scale-110"
+      (click)="closeSidebar()"
+      [routerLink]="['/gastos']"
+    >
+      <mat-icon> attach_money</mat-icon> Gastos
     </li>
   </ul>
 </div>

@@ -73,6 +73,26 @@ export class TravelService {
     }
   }
 
+
+    async getFilterTravels(page: number, filters: { client_id:number,truck_plate?: string; startDate?: Date; endDate?: Date }): Promise<ResponseData> {
+      try {
+        let params = new HttpParams().set('page', page.toString());
+        
+        if (filters.truck_plate) params = params.set('truck_plate', filters.truck_plate);
+        if (filters.client_id) params = params.set('client_id', filters.client_id);
+        if (filters.startDate) params = params.set('startDate', filters.startDate.toISOString().split('T')[0]); 
+        if (filters.endDate) params = params.set('endDate', filters.endDate.toISOString().split('T')[0]);
+  
+        const response = await lastValueFrom(
+          this.http.get<ResponseData>(`${this.API_URL}/travels/filters`, { params })
+        );
+        return response;
+      } catch (error) {
+        console.error('Error al obtener los transportes:', error);
+        throw error;
+      }
+    }
+
   async addTravel(travel: newTravel): Promise<{ message: string }> {
     try {
       const response = await lastValueFrom(

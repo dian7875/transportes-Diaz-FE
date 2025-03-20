@@ -1,0 +1,79 @@
+<div class="flex justify-between items-end py-5">
+  <div class="flex space-x-2.5">
+    <div>
+      <label for="truck">Camion</label>
+      <p-select
+        id="truck"
+        class="custom-select"
+        [options]="truckList.data()"
+        optionLabel="name"
+        optionValue="plate"
+        [(ngModel)]="plate"
+        placeholder="Seleccione el camion"
+        required
+      />
+    </div>
+    <div>
+      <label for="date">Fecha de inicio</label>
+      <p-datePicker
+        [(ngModel)]="date"
+        class="text-white custom"
+        required
+        dataType="date"
+        placeholder="dd/mm/yy"
+        dateFormat="dd/mm/yy"
+      />
+    </div>
+    <div>
+      <label for="endDate">Fecha de fin</label>
+      <p-datePicker
+        [(ngModel)]="endDate"
+        class="text-white custom"
+        required
+        dataType="date"
+        placeholder="dd/mm/yy"
+        dateFormat="dd/mm/yy"
+      />
+    </div>
+  </div>
+  <p-button severity="info"
+  (onClick)="openModal()"
+   type="button" label="Añadir gasto" />
+</div>
+<p-table
+  [value]="expenses.data()?.data || []"
+  [paginator]="true"
+  [rows]="8"
+  [totalRecords]="expenses.data()?.count || 0"
+  [lazy]="true"
+  [first]="(currentPage() - 1) * 8"
+  selectionMode="single"
+  [metaKeySelection]="metaKey"
+  dataKey="id"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  (onPage)="loadPage($event.first / $event.rows + 1)"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th class="w-5xl">Fecha</th>
+      <th class="w-5xl">Descipcion</th>
+      <th class="w-3xl">Monto</th>
+      <th class="w-3xl">Camion</th>
+      <th class="w-3xl">Acciones</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-expenses let-rowIndex="rowIndex">
+    <tr [pSelectableRow]="expenses" [pSelectableRowIndex]="rowIndex">
+      <td>{{ expenses.date | date : "dd/MM/yyyy" }}</td>
+      <td>{{ expenses.name }}</td>
+      <td>{{ expenses.mount }}</td>
+      <td>{{ expenses.truck.name }}</td>
+      <td>
+        <div class="p-button-group space-x-2 w-full">
+          <p-button severity="warn" icon="pi pi-file-edit" />
+          <p-button severity="danger" icon="pi pi-trash" />
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

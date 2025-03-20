@@ -25,18 +25,17 @@
       <td>{{ truck.plate }}</td>
       <td>{{ truck.name }}</td>
       <td>
-        <span class=" underline hover:text-blue-400"> Ver gastos </span>
+        <span class="underline hover:text-blue-400"> Ver gastos </span>
       </td>
       <td>
         <div class="p-button-group space-x-2 w-full">
           <p-button
             severity="success"
-            label="Añadir Gasto"
             icon="pi pi-cart-plus"
             (onClick)="openNewExpen(truck.plate)"
           />
-          <p-button severity="warn" label="Editar" icon="pi pi-file-edit" />
-          <p-button severity="danger" label="Eliminar" icon="pi pi-trash" />
+          <p-button severity="warn" icon="pi pi-file-edit" />
+          <p-button severity="danger" icon="pi pi-trash" />
         </div>
       </td>
     </tr>

@@ -26,9 +26,9 @@
     <tr [pSelectableRow]="travels" [pSelectableRowIndex]="rowIndex">
       <td>{{ travels.travelCode }}</td>
       <td>{{ travels.destination }}</td>
-      <td>{{ travels.noIVAmount }}</td>
-      <td>{{ travels.withIVAmount }}</td>
-      <td>{{ travels.IVAmount }}</td>
+      <td>₡ {{ travels.noIVAmount }}</td>
+      <td>₡ {{ travels.withIVAmount }}</td>
+      <td>₡ {{ travels.IVAmount }}</td>
       <td>{{ travels.travelDate | date : "dd/MM/yyyy" }}</td>
 
       <td>

@@ -11,6 +11,7 @@ import { HotToastService } from '@ngxpert/hot-toast';
 import {
   QueryClient,
   injectMutation,
+  injectQuery,
 } from '@tanstack/angular-query-experimental';
 import { ButtonModule } from 'primeng/button';
 import { DatePicker } from 'primeng/datepicker';
@@ -18,6 +19,9 @@ import { TravelService } from '../Travel.service';
 import { SelectModule } from 'primeng/select';
 import { InputNumber } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
+import { TruckServiceService } from '../../Trucks/TrucksList/TruckService.service';
+import { ClientsService } from '../../MyClients/clients.service';
+import { DriversService } from '../../Drivers/DriverList/driver.service';
 
 interface newTravel {
   travelCode: string;
@@ -47,6 +51,9 @@ interface newTravel {
 export class NewTravelModalComponent implements OnInit {
   queryClient = inject(QueryClient);
   travelForm: FormGroup;
+  truckService = inject(TruckServiceService);
+  clientService = inject(ClientsService);
+  driverService = inject(DriversService);
 
   constructor(
     private dialogRef: DialogRef<NewTravelModalComponent>,
@@ -97,5 +104,21 @@ export class NewTravelModalComponent implements OnInit {
   closeModal() {
     this.dialogRef.close();
   }
+
+  truckList = injectQuery(() => ({
+    queryKey: ['truck-complete'],
+    queryFn: () => this.truckService.getTrucksList(),
+  }));
+
+  clientList = injectQuery(() => ({
+    queryKey: ['client-complete'],
+    queryFn: () => this.clientService.getClientList(),
+  }));
+
+  driverList = injectQuery(() => ({
+    queryKey: ['drivers-complete'],
+    queryFn: () => this.driverService.getDriversList(),
+  }));
+
   ngOnInit() {}
 }

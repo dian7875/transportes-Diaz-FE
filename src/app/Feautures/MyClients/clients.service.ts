@@ -34,6 +34,17 @@ export class ClientsService {
     }
   }
 
+  async getClientList(): Promise<Client[]> {
+    try {
+      return await lastValueFrom(
+        this.http.get<Client[]>(`${this.API_URL}/clients/Complet-List`)
+      );
+    } catch (error) {
+      console.error('Error al obtener los clientes:', error);
+      throw error;
+    }
+  }
+
   async addClient(client: Client): Promise<{ message: string }> {
     try {
       const response = await lastValueFrom(

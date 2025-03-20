@@ -1,0 +1,63 @@
+<div class="p-6 bg-white rounded-xl shadow-xl w-96 text-black">
+  <h2 class="text-xl font-bold mb-4">Añadir nuevo Gasto</h2>
+  <form [formGroup]="expensForm" (ngSubmit)="onSubmit()">
+    <label for="truck">Camion</label>
+    <p-select
+      formControlName="truck_plate"
+      id="truck"
+      class="custom-select"
+      [options]="truckList.data()"
+      optionLabel="name"
+      optionValue="plate"
+      placeholder="Seleccione el camion"
+      required
+    />
+    <label class="block mb-2">Monto</label>
+    <input
+      formControlName="mount"
+      title="Monto"
+      type="number"
+      class="w-full p-2 border rounded mb-4"
+      placeholder="$"
+      required
+    />
+
+    <label class="block mb-2">Descripcion</label>
+    <input
+      formControlName="name"
+      title="Descripcion"
+      type="text"
+      class="w-full p-2 border rounded mb-4"
+      placeholder="Cambio de aceite"
+      required
+    />
+
+    <label class="block mb-2">Fecha</label>
+    <div class="mb-2">
+      <p-datePicker
+        formControlName="date"
+        class="text-white custom"
+        required
+        dataType="date"
+        placeholder="dd/mm/yy"
+        dateFormat="dd/mm/yy"
+      />
+    </div>
+    <div class="flex justify-around">
+      <p-button
+        [tabIndex]="2"
+        (onClick)="closeModal()"
+        severity="danger"
+        variant="outlined"
+        label="Cancelar"
+      />
+      <p-button
+        type="submit"
+        severity="info"
+        raised="true"
+        label="Guardar"
+        [disabled]="expensForm.invalid"
+      />
+    </div>
+  </form>
+</div>

@@ -38,6 +38,17 @@ export class DriversService {
     }
   }
 
+  async getDriversList(): Promise<Driver[]> {
+    try {
+      return await lastValueFrom(
+        this.http.get<Driver[]>(`${this.API_URL}/drivers/Complet-List`)
+      );
+    } catch (error) {
+      console.error('Error al obtener los conductores:', error);
+      throw error;
+    }
+  }
+
   async addDriver(truck: Driver): Promise<{ message: string }> {
     try {
       const response = await lastValueFrom(

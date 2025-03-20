@@ -34,6 +34,17 @@ export class TruckServiceService {
     }
   }
 
+  async getTrucksList(): Promise<Truck[]> {
+    try {
+      return await lastValueFrom(
+        this.http.get<Truck[]>(`${this.API_URL}/trucks/Complet-List`)
+      );
+    } catch (error) {
+      console.error('Error al obtener los camiones:', error);
+      throw error;
+    }
+  }
+
   async addTruck(truck: Truck): Promise<{ message: string }> {
     try {
       const response = await lastValueFrom(

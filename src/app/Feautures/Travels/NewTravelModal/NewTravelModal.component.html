@@ -1,7 +1,7 @@
 <div class="p-6 bg-white rounded-xl shadow-xl w-96 text-black">
   <h2 class="text-xl font-bold mb-4">Añadir nuevo trasnporte</h2>
   <form [formGroup]="travelForm" (ngSubmit)="onSubmit()">
-    <label class="block mb-2">Destino</label>
+    <label>Destino</label>
     <input
       formControlName="destination"
       title="destination"
@@ -11,7 +11,7 @@
       required
     />
 
-    <label class="block mb-2">ID del viaje</label>
+    <label>ID del viaje</label>
     <input
       formControlName="travelCode"
       title="travelCode"
@@ -22,54 +22,58 @@
     />
 
     <div class="mb-4">
-      <label class="block mb-2">Monto</label>
-  
-      <p-inputNumber 
-        class="w-full"
+      <label>Monto</label>
+      <p-inputNumber
+        class="w-full custom-NI"
         formControlName="amount"
         mode="decimal"
-        [minFractionDigits]="2"
         [maxFractionDigits]="2"
         placeholder="Ingrese el monto"
-      ></p-inputNumber>
-  
+      />
+
       <div class="mt-2 flex items-center">
-        <p-checkbox 
-          binary="true"
-          formControlName="isWithIV"
-        ></p-checkbox>
+        <p-checkbox binary="true" formControlName="isWithIV"></p-checkbox>
         <label class="ml-2">IVA incluido</label>
       </div>
     </div>
 
-    <label class="block mb-2">Fecha</label>
+    <label>Fecha</label>
     <p-datePicker
       formControlName="travelDate"
-      class="text-white custom"
+      class="text-white custom mb-2"
       required
       dataType="date"
       placeholder="dd/mm/yy"
       dateFormat="dd/mm/yy"
     />
-    <label class="block mb-2">Conductor</label>
+    <label>Conductor</label>
     <p-select
-      class="custom-select"
+      [options]="driverList.data()"
+      optionLabel="name"
+      optionValue="id"
+      class="custom-select mb-2"
       formControlName="driver_id"
       placeholder="Seleccione el conductor"
       required
     />
-    <label class="block mb-2">Camion</label>
+    <label>Camion</label>
     <p-select
-      class="custom-select"
+      class="custom-select mb-2"
       formControlName="truck_plate"
       placeholder="Seleccione el camion"
+      [options]="truckList.data()"
+      optionLabel="name"
+      optionValue="plate"
       required
     />
-    <label class="block mb-2">Cliente</label>
+    <label>Cliente</label>
     <p-select
-      class="custom-select"
+      class="custom-select mb-2"
       formControlName="client_id"
       placeholder="Seleccione el cliente"
+      [options]="clientList.data()"
+      optionLabel="name"
+      optionValue="id"
       required
     />
     <div class="flex justify-around mt-5">
