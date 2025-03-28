@@ -1,11 +1,10 @@
 <p-table
   [value]="drivers.data()?.data || []"
   [paginator]="true"
-  [rows]="8"
+  [rows]="6"
   [totalRecords]="drivers.data()?.count || 0"
   [lazy]="true"
-  [first]="(currentPage() - 1) * 8"
-  selectionMode="single"
+  [first]="(currentPage() - 1) * 6"
   [metaKeySelection]="metaKey"
   dataKey="id"
   [tableStyle]="{ 'min-width': '50rem' }"
@@ -13,22 +12,22 @@
 >
   <ng-template pTemplate="header">
     <tr>
-      <th class="w-5xl">Cedula</th>
+      <th class="w-5xl rounded-tl-lg">Cedula</th>
       <th class="w-5xl">Nombre</th>
       <th class="w-xl">Fecha de contratacion</th>
       <th class="w-3xl">Estado</th>
-      <th class="w-3xl">Acciones</th>
+      <th class="w-3xl rounded-tr-lg">Acciones</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-driver let-rowIndex="rowIndex">
-    <tr [pSelectableRow]="driver" [pSelectableRowIndex]="rowIndex">
+    <tr  class="hover:!bg-gray-200 ">
       <td>{{ driver.id }}</td>
       <td>{{ driver.name }}</td>
       <td>{{ driver.startDate | date : "dd/MM/yyyy" }}</td>
       <td>
         <div
           [ngClass]="driver.status ? 'active' : 'inactive'"
-          class="p-1 rounded-md w-1/4 text-center"
+          class="p-1 rounded-md w-2/3  text-center"
         >
           {{ driver.status ? "Activo" : "Inactivo" }}
         </div>

@@ -1,4 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpResponse,
+} from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { filter, lastValueFrom } from 'rxjs';
@@ -39,11 +43,12 @@ export class ReportsService {
       const contentDisposition = response.headers.get('content-disposition');
       const fileNameMatch = contentDisposition?.match(/filename="(.+)"/);
       const fileName = fileNameMatch ? fileNameMatch[1] : 'Reporte.pdf';
-
       this.downloadFile(response.body!, fileName);
     } catch (error) {
-      console.error('Error al generar reporte:', error);
-      throw error;
+      const errorMessage = (error as HttpErrorResponse).error;
+      const errorText = await errorMessage.text();
+      const errorJson = JSON.parse(errorText);
+      throw new Error(errorJson.message);
     }
   }
 

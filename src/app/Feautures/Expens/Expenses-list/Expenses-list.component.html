@@ -1,4 +1,4 @@
-<div class="flex justify-between items-end py-5">
+<div class="flex justify-between items-end py-5 text-black">
   <div class="flex space-x-2.5">
     <div>
       <label for="truck">Camion</label>
@@ -11,6 +11,7 @@
         [(ngModel)]="plate"
         placeholder="Seleccione el camion"
         required
+        showClear="true"
       />
     </div>
     <div>
@@ -22,6 +23,7 @@
         dataType="date"
         placeholder="dd/mm/yy"
         dateFormat="dd/mm/yy"
+        showClear="true"
       />
     </div>
     <div>
@@ -33,40 +35,44 @@
         dataType="date"
         placeholder="dd/mm/yy"
         dateFormat="dd/mm/yy"
+        showClear="true"
       />
     </div>
   </div>
-  <p-button severity="info"
-  (onClick)="openModal()"
-   type="button" label="Añadir gasto" />
+  <button
+    title="Añadir gasto"
+    class="p-2 px-3 bg-main text-white rounded-md hover:bg-blue-700 cursor-pointer"
+    type="button"
+    (click)="openModal()"
+  >
+    Añadir gasto
+  </button>
 </div>
 <p-table
   [value]="expenses.data()?.data || []"
   [paginator]="true"
-  [rows]="8"
+  [rows]="6"
   [totalRecords]="expenses.data()?.count || 0"
   [lazy]="true"
-  [first]="(currentPage() - 1) * 8"
-  selectionMode="single"
-  [metaKeySelection]="metaKey"
+  [first]="(currentPage() - 1) * 6"
   dataKey="id"
   [tableStyle]="{ 'min-width': '50rem' }"
   (onPage)="loadPage($event.first / $event.rows + 1)"
 >
   <ng-template pTemplate="header">
     <tr>
-      <th class="w-5xl">Fecha</th>
-      <th class="w-5xl">Descipcion</th>
+      <th class="w-5xl rounded-tl-lg">Fecha</th>
+      <th class="w-5xl">Descripcion</th>
       <th class="w-3xl">Monto</th>
       <th class="w-3xl">Camion</th>
-      <th class="w-3xl">Acciones</th>
+      <th class="w-3xl rounded-tr-lg">Acciones</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-expenses let-rowIndex="rowIndex">
-    <tr [pSelectableRow]="expenses" [pSelectableRowIndex]="rowIndex">
+    <tr  class="hover:!bg-gray-200 " >
       <td>{{ expenses.date | date : "dd/MM/yyyy" }}</td>
       <td>{{ expenses.name }}</td>
-      <td>{{ expenses.mount }}</td>
+      <td>₡ {{ expenses.mount }}</td>
       <td>{{ expenses.truck.name }}</td>
       <td>
         <div class="p-button-group space-x-2 w-full">
@@ -77,3 +83,11 @@
     </tr>
   </ng-template>
 </p-table>
+<div class="w-full flex justify-between text-xl mt-2.5 text-black">
+  <span><strong>Total de gastos</strong></span>
+  <span
+    ><strong
+      >₡{{ this.expenses.data()?.total | number : "1.0-0" }}</strong
+    ></span
+  >
+</div>

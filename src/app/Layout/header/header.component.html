@@ -1,21 +1,118 @@
 <header
-  class="w-full h-16 bg-black flex items-center justify-between p-4 text-white text-2xl"
+  class="w-full h-16 bg-main flex items-center justify-between p-6 text-white text-2xl"
 >
-  <button
-    type="button"
-    class="hover:scale-110"
-    (click)="openSidebar()"
-    title="Menu"
-  >
-    <figure>
-      <img
-        class="invert"
-        width="40"
-        src="https://cdn-icons-png.flaticon.com/128/561/561123.png"
-        alt=""
-      />
-    </figure>
-  </button>
+  <p-button severity="contrast" (click)="visible = true" icon="pi pi-bars" />
   <p>Transportes Díaz</p>
-  <span></span>
+  <div class="card flex justify-center w-fit">
+    <p-drawer #drawerRef [(visible)]="visible">
+      <ng-template #headless>
+        <div class="flex flex-col h-full w-fit bg-white text-black">
+          <div class="flex items-center justify-between px-1 pt-2 shrink-0">
+            <span class="inline-flex items-center gap-2">
+              <img src="image.png" width="90px" alt="" />
+              <span class="font-semibold text-2xl text-primary"
+                >Transportes Díaz</span
+              >
+            </span>
+            <span>
+              <p-button
+                severity="contrast"
+                type="button"
+                (click)="closeCallback($event)"
+                icon="pi pi-times"
+              ></p-button>
+            </span>
+          </div>
+          <div class="overflow-y-auto">
+            <ul
+              class="list-none p-0 m-0 overflow-hidden hover:[&>li:hover]:bg-gray-200 hover:[&>li:hover]:text-blue-900"
+              (click)="closeCallback($event)"
+            >
+              <li>
+                <a
+                  [routerLink]="['']"
+                  class="flex items-center cursor-pointer p-4 rounded-border"
+                >
+                  <i class="pi pi-home mr-2"></i>
+                  <span class="font-medium">Inicio</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  [routerLink]="['/camiones']"
+                  class="flex items-center cursor-pointer p-4 rounded-border"
+                >
+                  <i class="pi pi-truck mr-2"></i>
+                  <span class="font-medium">Camiones</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  [routerLink]="['/choferes']"
+                  class="flex items-center cursor-pointer p-4 rounded-border"
+                >
+                  <i class="pi pi-id-card mr-2"></i>
+                  <span class="font-medium">Choferes</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  [routerLink]="['/clientes']"
+                  class="flex items-center cursor-pointer p-4 rounded-border"
+                >
+                  <i class="pi pi-users mr-2"></i>
+                  <span class="font-medium">Clientes</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  [routerLink]="['/transportes']"
+                  class="flex items-center cursor-pointer p-4 rounded-border"
+                >
+                  <i class="pi pi-car mr-2"></i>
+                  <span class="font-medium">Transportes</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  [routerLink]="['/reportes']"
+                  class="flex items-center cursor-pointer p-4 rounded-border"
+                >
+                  <i class="pi pi-file mr-2"></i>
+                  <span class="font-medium">Reportes</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  [routerLink]="['/gastos']"
+                  class="flex items-center cursor-pointer p-4 rounded-border"
+                >
+                  <i class="pi pi-dollar mr-2"></i>
+                  <span class="font-medium">Gastos</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  [routerLink]="['/facturas']"
+                  class="flex items-center cursor-pointer p-4 rounded-border"
+                >
+                  <i class="pi pi-receipt mr-2"></i>
+                  <span class="font-medium">Facturas</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  [routerLink]="['/facturas']"
+                  class="flex items-center cursor-pointer p-4 rounded-border hover:bg-red-50 hover:text-red-950"
+                >
+                  <i class="pi pi-power-off mr-2"></i>
+                  <span class="font-medium">Cerrar sesion</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </ng-template>
+    </p-drawer>
+  </div>
 </header>

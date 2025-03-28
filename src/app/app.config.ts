@@ -5,7 +5,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient } from '@angular/common/http';
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
 import { providePrimeNG } from 'primeng/config';
-import Aura from '@primeng/themes/aura';
+import Nora from '@primeng/themes/aura';
 
 import {
   provideTanStackQuery,
@@ -22,7 +22,7 @@ export const appConfig: ApplicationConfig = {
     provideHotToastConfig(),
     providePrimeNG({
       theme: {
-          preset: Aura
+          preset: Nora
       }
   })
   ],

@@ -1,11 +1,10 @@
 <p-table
   [value]="clients.data()?.data || []"
   [paginator]="true"
-  [rows]="8"
+  [rows]="6"
   [totalRecords]="clients.data()?.count || 0"
   [lazy]="true"
-  [first]="(currentPage() - 1) * 8"
-  selectionMode="single"
+  [first]="(currentPage() - 1) * 6"
   [metaKeySelection]="metaKey"
   dataKey="id"
   [tableStyle]="{ 'min-width': '50rem' }"
@@ -13,12 +12,12 @@
 >
   <ng-template pTemplate="header">
     <tr>
-      <th class="w-5xl">Nombre</th>
-      <th class="w-3xl">Acciones</th>
+      <th class="w-5xl rounded-tl-lg">Nombre</th>
+      <th class="w-3xl rounded-tr-lg">Acciones</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-clients let-rowIndex="rowIndex">
-    <tr [pSelectableRow]="clients" [pSelectableRowIndex]="rowIndex">
+    <tr class="hover:!bg-gray-200">
       <td>{{ clients.name }}</td>
 
       <td>

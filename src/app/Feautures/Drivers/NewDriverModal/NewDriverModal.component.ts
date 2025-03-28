@@ -15,6 +15,7 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { DriversService } from '../DriverList/driver.service';
 import { DatePicker } from 'primeng/datepicker';
+import { from } from 'rxjs';
 
 interface Driver {
   id: number;
@@ -48,30 +49,35 @@ export class NewDriverModalComponent {
     });
   }
 
-  mutation = injectMutation(() => ({
-    mutationFn: (driver: Driver) => this.driverService.addDriver(driver),
-    onSuccess: () => {
-      this.queryClient.invalidateQueries({ queryKey: ['drivers'] });
-    },
-  }));
-
   async onSubmit() {
     if (this.driverForm.invalid) {
       return;
     }
+
     const driver = this.driverForm.value;
     const formattedDate = this.datePipe.transform(
       driver.startDate,
       'yyyy-MM-dd'
     );
     driver.startDate = formattedDate;
-    try {
-      this.mutation.mutate(driver);
-      this.toast.success('Camión agregado correctamente');
-      this.closeModal();
-    } catch (error) {
-      console.error('Error al agregar camión', error);
-    }
+
+    from(this.driverService.addDriver(driver))
+      .pipe(
+        this.toast.observe({
+          loading: 'Añadiendo conductor, por favor espere...',
+          success: () => {
+            this.queryClient.invalidateQueries({ queryKey: ['drivers'] });
+            this.closeModal();
+            return 'Conductor agregado correctamente';
+          },
+          error: (error) => {
+            const errorMessage =
+              (error as { message?: string }).message || 'Error desconocido';
+            return `Error al agregar el conductor: ${errorMessage}`;
+          },
+        })
+      )
+      .subscribe(() => {});
   }
 
   closeModal() {

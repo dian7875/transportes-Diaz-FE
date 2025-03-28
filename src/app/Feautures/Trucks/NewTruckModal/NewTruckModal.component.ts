@@ -1,11 +1,20 @@
 import { DialogRef } from '@angular/cdk/dialog';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { TruckServiceService } from '../TrucksList/TruckService.service';
 import { CommonModule } from '@angular/common';
-import { injectMutation, QueryClient } from '@tanstack/angular-query-experimental';
+import {
+  injectMutation,
+  QueryClient,
+} from '@tanstack/angular-query-experimental';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { ButtonModule } from 'primeng/button';
+import { catchError, from } from 'rxjs';
 
 interface Truck {
   plate: string;
@@ -18,7 +27,7 @@ interface Truck {
   imports: [CommonModule, ReactiveFormsModule, ButtonModule],
 })
 export class NewTruckModalComponent {
-  queryClient = inject(QueryClient)
+  queryClient = inject(QueryClient);
   truckForm: FormGroup;
 
   constructor(
@@ -33,25 +42,31 @@ export class NewTruckModalComponent {
     });
   }
 
-  mutation = injectMutation(() => ({
-    mutationFn: (truck:Truck) => this.truckService.addTruck(truck),
-    onSuccess: () => {
-      this.queryClient.invalidateQueries({ queryKey: ['trucks'] })
-    },
-  }))
-
   async onSubmit() {
     if (this.truckForm.invalid) {
       return;
     }
     const truck = this.truckForm.value;
-    try {
-      this.mutation.mutate(truck);
-      this.toast.success('Camión agregado correctamente');
-      this.closeModal();
-    } catch (error) {
-      console.error('Error al agregar camión', error);
-    }
+
+    from(this.truckService.addTruck(truck))
+      .pipe(
+        this.toast.observe({
+          loading: 'Añadiendo...',
+          success: () => {
+            this.queryClient.invalidateQueries({ queryKey: ['trucks'] });
+            this.closeModal();
+            return 'Camion añadido correctamente';
+          },
+          error: (error) => {
+            const errorMessage =
+              (error as { message?: string }).message || 'Unknown error';
+            return `Error al añadir camion: ${errorMessage}`;
+          },
+        })
+      )
+      .subscribe(() => {
+      
+      });
   }
 
   closeModal() {

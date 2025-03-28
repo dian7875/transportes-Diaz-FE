@@ -1,0 +1,104 @@
+<div class="p-6 bg-white rounded-xl shadow-xl w-96 text-black">
+  <h2 class="text-xl font-bold mb-4">Añadir nuevo conductor</h2>
+  <div>
+    <label for="client">Cliente</label>
+    <p-select
+      id="client"
+      class="custom-select mb-2"
+      [options]="clientList.data()"
+      optionLabel="name"
+      optionValue="id"
+      [(ngModel)]="client_id"
+      placeholder="Seleccione el cliente"
+    />
+  </div>
+  <div>
+    <label for="startDate">Fecha de inicio</label>
+    <p-datePicker
+      id="startDate"
+      [(ngModel)]="startDate"
+      class="text-white custom mb-2"
+      required
+      dataType="date"
+      placeholder="dd/mm/yy"
+      dateFormat="dd/mm/yy"
+    />
+  </div>
+  <div>
+    <label for="endDate">Fecha de fin</label>
+    <p-datePicker
+      id="endDate"
+      [(ngModel)]="endDate"
+      class="text-white custom mb-2"
+      required
+      dataType="date"
+      placeholder="dd/mm/yy"
+      dateFormat="dd/mm/yy"
+    />
+  </div>
+  <form [formGroup]="InvoiceForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="InvoicesNumber">Numero de factura</label>
+      <input
+        formControlName="invoicesNumber"
+        title="id"
+        type="text"
+        class="w-full p-2 border rounded mb-2"
+        placeholder="FAC----"
+        required
+      />
+    </div>
+    <div>
+      <label for="invoiceAmount">Monto</label>
+      <p-inputNumber
+        id="invoiceAmount"
+        formControlName="invoiceAmount"
+        class="w-full custom-NI mb-2"
+        mode="decimal"
+        [maxFractionDigits]="2"
+        placeholder="Ingrese el monto"
+      />
+    </div>
+    <div>
+      <label for="invoiceDate">Fecha de facturacion</label>
+      <p-datePicker
+        id="invoiceDate"
+        formControlName="invoiceDate"
+        class="text-white custom mb-2"
+        required
+        dataType="date"
+        placeholder="dd/mm/yy"
+        dateFormat="dd/mm/yy"
+      />
+    </div>
+    <div>
+      <label for="dueDate">Fecha de vencimiento</label>
+      <p-datePicker
+        id="dueDate"
+        formControlName="dueDate"
+        class="text-white custom mb-2"
+        required
+        dataType="date"
+        placeholder="dd/mm/yy"
+        dateFormat="dd/mm/yy"
+      />
+    </div>
+
+    <div class="flex justify-around mt-5">
+      <p-button
+        [tabIndex]="2"
+        (onClick)="closeModal()"
+        severity="danger"
+        variant="outlined"
+        label="Cancelar"
+      />
+      <p-button
+        type="submit"
+        severity="info"
+        raised="true"
+        label="Guardar"
+        [disabled]="InvoiceForm.invalid"
+      />
+    </div>
+  </form>
+</div>

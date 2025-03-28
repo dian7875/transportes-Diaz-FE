@@ -12,6 +12,7 @@ interface Expenses {
 interface ExpensesResponse {
   data: ExpensesList[];
   count: number;
+  total:number
 }
 
 interface truck {

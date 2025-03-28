@@ -1,12 +1,14 @@
 <main class="w-full h-full p-4">
   <div class="flex justify-between items-center mb-5">
-    <h3 class="text-4xl">Transportes</h3>
-    <p-button
-      severity="info"
+    <h3 class="text-4xl text-black">Transportes</h3>
+    <button
+      title="Añadir vehiculo"
+      class="p-2 px-3 bg-main text-white rounded-md hover:bg-blue-700 cursor-pointer"
       type="button"
-      (onClick)="openModal()"
-      label="Añadir transporte"
-    />
+      (click)="openModal()"
+    >
+      Añadir transporte
+    </button>
   </div>
   <app-TravelList />
 </main>

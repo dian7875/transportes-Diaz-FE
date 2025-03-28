@@ -7,6 +7,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { TruckServiceService } from '../../Trucks/TrucksList/TruckService.service';
+import { SplitButton } from 'primeng/splitbutton';
 import {
   injectMutation,
   injectQuery,
@@ -37,7 +38,8 @@ interface filterReport {
     FormsModule,
     SelectModule,
     DatePicker,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    SplitButton,
   ],
   providers: [DatePipe],
 })
@@ -69,17 +71,37 @@ export class TravelsResumenComponent {
         client_id: this.client_id() || '',
         reportType: this.reportType() || '',
       },
-      { 
+      {
         onSuccess: () => {
           this.toast.success('Reporte descargado con éxito');
         },
         onError: (error) => {
-          this.toast.error('Error al generar el reporte');
+          this.toast.error(error.message);
           console.error(error);
         },
       }
     );
   }
+
+  
+  splitButtonItems = [
+    {
+      label: 'Generar reporte externo',
+      command: () => {
+        this.reportType.set('EX');
+        this.downloadReport();
+      },
+    },
+    {
+      label: 'Generar reporte interno',
+      command: () => {
+        this.reportType.set('INT');
+        this.downloadReport();
+      },
+    },
+  ];
+
+  
 
   truckService = inject(TruckServiceService);
   clientService = inject(ClientsService);
@@ -126,14 +148,6 @@ export class TravelsResumenComponent {
     queryFn: () => this.clientService.getClientList(),
   }));
 
-  loadExpenses() {
-    const filters = {
-      plate: this.truck_plate(),
-      client: this.client_id(),
-      startDate: this.startDate(),
-      endDate: this.endDate(),
-    };
-  }
 
   loadPage(page: number) {
     this.currentPage.set(page);

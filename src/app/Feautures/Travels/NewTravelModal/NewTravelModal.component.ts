@@ -22,6 +22,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { TruckServiceService } from '../../Trucks/TrucksList/TruckService.service';
 import { ClientsService } from '../../MyClients/clients.service';
 import { DriversService } from '../../Drivers/DriverList/driver.service';
+import { from } from 'rxjs';
 
 interface newTravel {
   travelCode: string;
@@ -74,13 +75,6 @@ export class NewTravelModalComponent implements OnInit {
     });
   }
 
-  mutation = injectMutation(() => ({
-    mutationFn: (travel: newTravel) => this.travelService.addTravel(travel),
-    onSuccess: () => {
-      this.queryClient.invalidateQueries({ queryKey: ['travels'] });
-    },
-  }));
-
   async onSubmit() {
     if (this.travelForm.invalid) {
       return;
@@ -93,13 +87,26 @@ export class NewTravelModalComponent implements OnInit {
     travel.travelDate = formattedDate;
     travel.noIVAmount = travel.isWithIV ? null : travel.amount;
     travel.withIVAmount = travel.isWithIV ? travel.amount : null;
-    try {
-      this.mutation.mutate(travel);
-      this.toast.success('Transporte agregado correctamente');
-      this.closeModal();
-    } catch (error) {
-      console.error('Error al agregar el transporte', error);
-    }
+
+    from(this.travelService.addTravel(travel))
+      .pipe(
+        this.toast.observe({
+          loading: 'Añadiendo transporte, por favor espere...',
+          success: () => {
+            this.closeModal();
+            this.queryClient.invalidateQueries({ queryKey: ['travels'] });
+            return 'Transporte agregado correctamente!';
+          },
+          error: (error) => {
+            const errorMessage =
+              (error as { message?: string }).message || 'Error desconocido';
+            return `Error al agregar el transporte: ${errorMessage}`;
+          },
+        })
+      )
+      .subscribe(() => {
+      
+      });
   }
   closeModal() {
     this.dialogRef.close();

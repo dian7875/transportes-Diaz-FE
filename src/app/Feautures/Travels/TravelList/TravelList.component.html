@@ -1,10 +1,10 @@
 <p-table
   [value]="travels.data()?.data || []"
   [paginator]="true"
-  [rows]="8"
+  [rows]="6"
   [totalRecords]="travels.data()?.count || 0"
   [lazy]="true"
-  [first]="(currentPage() - 1) * 8"
+  [first]="(currentPage() - 1) * 6"
   selectionMode="single"
   [metaKeySelection]="metaKey"
   dataKey="id"
@@ -13,17 +13,17 @@
 >
   <ng-template pTemplate="header">
     <tr>
-      <th class="w-xl">ID viaje</th>
+      <th class="w-xl rounded-tl-lg">ID viaje</th>
       <th class="w-xl">Destino</th>
       <th class="w-xl">Precio sin IVA</th>
       <th class="w-xl">IVA incluido</th>
       <th class="w-xl">IVA</th>
       <th class="w-xl">Fecha</th>
-      <th class="w-3xl">Acciones</th>
+      <th class="w-3xl rounded-tr-lg">Acciones</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-travels let-rowIndex="rowIndex">
-    <tr [pSelectableRow]="travels" [pSelectableRowIndex]="rowIndex">
+    <tr class="hover:!bg-gray-200">
       <td>{{ travels.travelCode }}</td>
       <td>{{ travels.destination }}</td>
       <td>₡ {{ travels.noIVAmount }}</td>

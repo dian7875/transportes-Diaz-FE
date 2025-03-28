@@ -1,12 +1,10 @@
 <p-table
   [value]="trucks.data()?.data || []"
   [paginator]="true"
-  [rows]="8"
+  [rows]="6"
   [totalRecords]="trucks.data()?.count || 0"
   [lazy]="true"
-  [first]="(currentPage() - 1) * 8"
-  selectionMode="single"
-  [(selection)]="selectedTrucks"
+  [first]="(currentPage() - 1) * 6"
   [metaKeySelection]="metaKey"
   dataKey="plate"
   [tableStyle]="{ 'min-width': '50rem' }"
@@ -14,14 +12,14 @@
 >
   <ng-template pTemplate="header">
     <tr>
-      <th class="w-5xl">Placa</th>
+      <th class="w-5xl rounded-tl-lg">Placa</th>
       <th class="w-5xl">Nombre</th>
       <th class="w-xl">Gastos asociados</th>
-      <th class="w-3xl">Acciones</th>
+      <th class="w-3xl rounded-tr-lg">Acciones</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-truck let-rowIndex="rowIndex">
-    <tr [pSelectableRow]="truck" [pSelectableRowIndex]="rowIndex">
+    <tr class="hover:!bg-gray-200 ">
       <td>{{ truck.plate }}</td>
       <td>{{ truck.name }}</td>
       <td>

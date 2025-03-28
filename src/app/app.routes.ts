@@ -6,6 +6,7 @@ import { TravelsComponent } from './Feautures/Travels/Travels/Travels.component'
 import { MyClientsComponent } from './Feautures/MyClients/MyClients/MyClients.component';
 import { ExpensesComponent } from './Feautures/Expens/Expenses/Expenses.component';
 import { ReportsComponent } from './Feautures/Reports/Reports.component';
+import { InvoicesComponent } from './Feautures/invoices/invoices.component';
 
 export const routes: Routes = [
   { path: 'clientes', component: MyClientsComponent },
@@ -14,6 +15,7 @@ export const routes: Routes = [
   { path: 'camiones', component: TrucksComponent },
   { path: 'reportes', component: ReportsComponent },
   { path: 'gastos', component: ExpensesComponent },
+  { path: 'facturas', component: InvoicesComponent },
   { path: '', redirectTo: '', pathMatch: 'full' },
 ];
 

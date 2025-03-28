@@ -14,6 +14,7 @@ import {
 } from '@tanstack/angular-query-experimental';
 import { ButtonModule } from 'primeng/button';
 import { ClientsService } from '../clients.service';
+import { from } from 'rxjs';
 
 interface client {
   name: string;
@@ -39,12 +40,6 @@ export class NewClientComponent implements OnInit {
       name: ['', [Validators.required]],
     });
   }
-  mutation = injectMutation(() => ({
-    mutationFn: (client: client) => this.clientService.addClient(client),
-    onSuccess: () => {
-      this.queryClient.invalidateQueries({ queryKey: ['clients'] });
-    },
-  }));
 
   async onSubmit() {
     if (this.clientForm.invalid) {
@@ -52,17 +47,27 @@ export class NewClientComponent implements OnInit {
     }
     const client = this.clientForm.value;
 
-    try {
-      this.mutation.mutate(client);
-      this.toast.success('Cliente agregado correctamente');
-      this.closeModal();
-    } catch (error) {
-      console.error('Error al agregar el cliente', error);
-    }
+    from(this.clientService.addClient(client))
+      .pipe(
+        this.toast.observe({
+          loading: 'Añadiendo cliente, por favor espere...',
+          success: () => {
+            this.queryClient.invalidateQueries({ queryKey: ['clients'] });
+            this.closeModal();
+            return 'Cliente agregado correctamente';
+          },
+          error: (error) => {
+            const errorMessage =
+              (error as { message?: string }).message || 'Error desconocido';
+            return `Error al agregar el cliente: ${errorMessage}`;
+          },
+        })
+      )
+      .subscribe(() => {});
   }
+
   closeModal() {
     this.dialogRef.close();
   }
   ngOnInit() {}
 }
-
