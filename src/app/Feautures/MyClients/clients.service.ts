@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environments';
 
 interface Client {
   name: string;
