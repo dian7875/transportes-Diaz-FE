@@ -9,5 +9,6 @@ export const environment = {
 };
 `;
 
+console.log(process.env.API_URL);
 writeFileSync(targetPath, envConfigFile);
 console.log("✅ Archivo de entorno generado correctamente.");
