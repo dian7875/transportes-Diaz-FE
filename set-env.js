@@ -1,14 +1,12 @@
-const { writeFileSync } = require("fs");
+const fs = require('fs');
+const path = require('path');
 
-const targetPath = "./src/environments/environment.prod.ts";
+console.log(process.env.API_URL)
+const envFilePath = path.join(__dirname, 'src/environments/environment.prod.ts');
 
-const envConfigFile = `
-export const environment = {
+let content = `export const environment = {
   production: true,
   API_URL: '${process.env.API_URL}'
-};
-`;
-
-console.log(process.env.API_URL);
-writeFileSync(targetPath, envConfigFile);
-console.log("✅ Archivo de entorno generado correctamente.");
+};`;
+fs.writeFileSync(envFilePath, content);
+console.log('Environment file created successfully');
