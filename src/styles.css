@@ -11,7 +11,7 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.custom input {
+.custom  input, .custom2 input {
   background-color: white;
   color: black;
 }
@@ -19,6 +19,7 @@ body {
 .custom span {
   width: 100%;
 }
+
 
 .active {
   background-color: #4caf50;

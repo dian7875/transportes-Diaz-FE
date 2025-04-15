@@ -8,7 +8,10 @@ import { ExpensesComponent } from './Feautures/Expens/Expenses/Expenses.componen
 import { ReportsComponent } from './Feautures/Reports/Reports.component';
 import { InvoicesComponent } from './Feautures/invoices/invoices.component';
 
+import { HomeComponent } from './Pages/Home/Home.component';
+
 export const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'clientes', component: MyClientsComponent },
   { path: 'transportes', component: TravelsComponent },
   { path: 'choferes', component: DriversComponent },
@@ -16,7 +19,7 @@ export const routes: Routes = [
   { path: 'reportes', component: ReportsComponent },
   { path: 'gastos', component: ExpensesComponent },
   { path: 'facturas', component: InvoicesComponent },
-  { path: '', redirectTo: '', pathMatch: 'full' },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({

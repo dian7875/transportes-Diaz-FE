@@ -1,0 +1,59 @@
+<section class="space-y-10">
+  <h1 class="text-4xl font-bold">Inicio</h1>
+  <div class="flex w-full bg-white p-4 rounded-md flex-col">
+    <div>
+      <label for="Week">Semana a consultar</label>
+      <p-datepicker
+        [(ngModel)]="date"
+        class="text-white custom2"
+        dateFormat="dd-mm-yy"
+        [showButtonBar]="true"
+      />
+    </div>
+    <div class="flex min-h-[45vh]">
+      <div class="w-3/4">
+        <ngx-charts-bar-vertical-2d
+          class="w-full"
+          [results]="secondData"
+          [gradient]="false"
+          [xAxis]="true"
+          [yAxis]="true"
+          [showXAxisLabel]="true"
+          [xAxisLabel]="xAxisLabel"
+          [legend]="true"
+        ></ngx-charts-bar-vertical-2d>
+      </div>
+      <div class="w-1/4">
+        <ngx-charts-pie-chart
+          class="w-full"
+          [results]="data"
+          [labels]="true"
+          [doughnut]="doughnut"
+          [explodeSlices]="explodeSlices"
+        ></ngx-charts-pie-chart>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-cols-5 gap-4">
+    <app-CounterCard
+      name="Camiones disponibles"
+      [count]="generalCount.data()?.trucks ?? 0"
+    />
+    <app-CounterCard
+      name="Conductores"
+      [count]="generalCount.data()?.drivers ?? 0"
+    />
+    <app-CounterCard
+      name="Clientes"
+      [count]="generalCount.data()?.clients ?? 0"
+    />
+    <app-CounterCard
+      name="Viajes realizados esta semana"
+      [count]="generalCount.data()?.TravelsCount ?? 0"
+    />
+    <app-CounterCard
+      name="₡Producido esta semana"
+      [count]="generalCount.data()?.productivity ?? 0"
+    />
+  </div>
+</section>

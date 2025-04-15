@@ -1,5 +1,4 @@
 export const environment = {
-    production: false,
-    API_URL: 'https://transportes-diaz-production.up.railway.app'
-  };
-  
+  production: false,
+  API_URL: 'http://localhost:3000',
+};

@@ -7,6 +7,7 @@ import { provideHotToastConfig } from '@ngxpert/hot-toast';
 import { providePrimeNG } from 'primeng/config';
 import Nora from '@primeng/themes/aura';
 
+
 import {
   provideTanStackQuery,
   QueryClient,
@@ -22,8 +23,8 @@ export const appConfig: ApplicationConfig = {
     provideHotToastConfig(),
     providePrimeNG({
       theme: {
-          preset: Nora
-      }
-  })
+        preset: Nora,
+      },
+    }),
   ],
 };
