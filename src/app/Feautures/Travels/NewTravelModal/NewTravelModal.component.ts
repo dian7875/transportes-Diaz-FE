@@ -19,10 +19,10 @@ import { TravelService } from '../Travel.service';
 import { SelectModule } from 'primeng/select';
 import { InputNumber } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
-import { TruckServiceService } from '../../Trucks/TrucksList/TruckService.service';
 import { ClientsService } from '../../MyClients/clients.service';
 import { DriversService } from '../../Drivers/driver.service';
 import { from } from 'rxjs';
+import { TruckServiceService } from '../../Trucks/TruckService.service';
 
 interface newTravel {
   travelCode: string;

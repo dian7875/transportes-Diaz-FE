@@ -17,9 +17,9 @@ import { ButtonModule } from 'primeng/button';
 import { DatePicker } from 'primeng/datepicker';
 import { ExpensesService } from '../Expenses/Expenses.service';
 import { HotToastService } from '@ngxpert/hot-toast';
-import { TruckServiceService } from '../../Trucks/TrucksList/TruckService.service';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { SelectModule } from 'primeng/select';
+import { TruckServiceService } from '../../Trucks/TruckService.service';
 
 interface NewExpense {
   mount: number;
@@ -101,5 +101,5 @@ export class TotalNewExpenseComponent {
     this.dialogRef.close();
   }
 
- 
+
 }

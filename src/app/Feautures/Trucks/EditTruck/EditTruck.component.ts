@@ -1,74 +1,63 @@
-import { DialogRef } from '@angular/cdk/dialog';
-import { Component, inject, OnInit } from '@angular/core';
+import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
+import { Component, Inject, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import {
-  injectMutation,
-  QueryClient,
-} from '@tanstack/angular-query-experimental';
 import { HotToastService } from '@ngxpert/hot-toast';
-import { ButtonModule } from 'primeng/button';
-import { catchError, from } from 'rxjs';
 import { TruckServiceService } from '../TruckService.service';
-
-interface Truck {
-  plate: string;
-  name: string;
-}
+import { QueryClient } from '@tanstack/angular-query-experimental';
+import { Truck } from '../Trucks';
+import { from } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
-  selector: 'app-NewTruckModal',
-  templateUrl: './NewTruckModal.component.html',
+  selector: 'app-EditTruck',
+  templateUrl: './EditTruck.component.html',
   imports: [CommonModule, ReactiveFormsModule, ButtonModule],
 })
-export class NewTruckModalComponent {
+export class EditTruckComponent {
   queryClient = inject(QueryClient);
   truckForm: FormGroup;
-
   constructor(
-    private dialogRef: DialogRef<NewTruckModalComponent>,
+    @Inject(DIALOG_DATA) public data: Truck,
+    private dialogRef: DialogRef<EditTruckComponent>,
     private truckService: TruckServiceService,
     private fb: FormBuilder,
     private toast: HotToastService
   ) {
     this.truckForm = this.fb.group({
-      name: ['', [Validators.required]],
-      plate: ['', [Validators.required]],
+      plate: [data.plate],
+      name: [data.name, Validators.required],
     });
   }
-
   async onSubmit() {
     if (this.truckForm.invalid) {
       return;
     }
     const truck = this.truckForm.value;
 
-    from(this.truckService.addTruck(truck))
+    from(this.truckService.editTruck(truck))
       .pipe(
         this.toast.observe({
-          loading: 'Añadiendo...',
+          loading: 'Actualizando camión...',
           success: () => {
             this.queryClient.invalidateQueries({ queryKey: ['trucks'] });
             this.closeModal();
-            return 'Camion añadido correctamente';
+            return 'Camión actualizado correctamente';
           },
           error: (error) => {
             const errorMessage =
               (error as { message?: string }).message || 'Unknown error';
-            return `Error al añadir camion: ${errorMessage}`;
+            return `Error al actualizar camión: ${errorMessage}`;
           },
         })
       )
-      .subscribe(() => {
-
-      });
+      .subscribe(() => {});
   }
-
   closeModal() {
     this.dialogRef.close();
   }

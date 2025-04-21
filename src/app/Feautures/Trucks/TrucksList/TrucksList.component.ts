@@ -1,5 +1,4 @@
 import { Component, inject, signal } from '@angular/core';
-import { TruckServiceService } from './TruckService.service';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
@@ -7,6 +6,10 @@ import { ButtonModule } from 'primeng/button';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { NewExpensesModalComponent } from '../../Expens/NewExpensesModal/NewExpensesModal.component';
+import { TruckServiceService } from '../TruckService.service';
+import { Truck } from '../Trucks';
+import { DisableTruckComponent } from '../DisableTruck/DisableTruck.component';
+import { EditTruckComponent } from '../EditTruck/EditTruck.component';
 
 @Component({
   selector: 'Trucks-List',
@@ -32,9 +35,19 @@ export class TrucksList {
     queryFn: () => this.truckService.getTrucks(this.currentPage()),
   }));
 
+  openEdit(truck: Truck) {
+    this.dialog.open(EditTruckComponent, {
+      data: truck,
+    });
+  }
 
-  
+  openDelete(truck: Truck) {
+    this.dialog.open(DisableTruckComponent, {
+      data: truck,
+    });
+  }
+
   loadPage(page: number) {
-    this.currentPage.set(page); 
+    this.currentPage.set(page);
   }
 }

@@ -6,7 +6,6 @@ import { DatePicker } from 'primeng/datepicker';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
-import { TruckServiceService } from '../../Trucks/TrucksList/TruckService.service';
 import { SplitButton } from 'primeng/splitbutton';
 import {
   injectMutation,
@@ -17,6 +16,7 @@ import { ClientsService } from '../../MyClients/clients.service';
 import { ReportsService } from '../Reports.service';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TruckServiceService } from '../../Trucks/TruckService.service';
 
 interface filterReport {
   startDate: string;
@@ -83,7 +83,7 @@ export class TravelsResumenComponent {
     );
   }
 
-  
+
   splitButtonItems = [
     {
       label: 'Generar reporte externo',
@@ -101,7 +101,7 @@ export class TravelsResumenComponent {
     },
   ];
 
-  
+
 
   truckService = inject(TruckServiceService);
   clientService = inject(ClientsService);

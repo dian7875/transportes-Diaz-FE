@@ -7,23 +7,27 @@
   [first]="(currentPage() - 1) * 6"
   [metaKeySelection]="metaKey"
   dataKey="plate"
-  [tableStyle]="{ 'min-width': '50rem' }"
   (onPage)="loadPage($event.first / $event.rows + 1)"
 >
   <ng-template pTemplate="header">
     <tr>
       <th class="w-5xl rounded-tl-lg">Placa</th>
-      <th class="w-5xl">Nombre</th>
-      <th class="w-xl">Gastos asociados</th>
+      <th class="w-5xl max-md:hidden">Nombre</th>
+      <th class="w-xl max-md:hidden">Estado</th>
       <th class="w-3xl rounded-tr-lg">Acciones</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-truck let-rowIndex="rowIndex">
-    <tr class="hover:!bg-gray-200 ">
-      <td>{{ truck.plate }}</td>
+    <tr class="hover:!bg-gray-200">
+      <td class="max-md:hidden">{{ truck.plate }}</td>
       <td>{{ truck.name }}</td>
-      <td>
-        <span class="underline hover:text-blue-400"> Ver gastos </span>
+      <td class="max-md:hidden">
+        <div
+          [ngClass]="truck.status ? 'active' : 'inactive'"
+          class="p-1 rounded-md w-2/3 text-center"
+        >
+          {{ truck.status ? "Activo" : "Inactivo" }}
+        </div>
       </td>
       <td>
         <div class="p-button-group flex gap-x-2 w-full">
@@ -32,8 +36,16 @@
             icon="pi pi-cart-plus"
             (onClick)="openNewExpen(truck.plate)"
           />
-          <p-button severity="warn" icon="pi pi-file-edit" />
-          <p-button severity="danger" icon="pi pi-trash" />
+          <p-button
+            severity="warn"
+            icon="pi pi-file-edit"
+            (click)="openEdit(truck)"
+          />
+          <p-button
+            severity="danger"
+            icon="pi pi-trash"
+            (click)="openDelete(truck)"
+          />
         </div>
       </td>
     </tr>
