@@ -9,8 +9,8 @@ import { TableModule } from 'primeng/table';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DatePicker } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
-import { TruckServiceService } from '../../Trucks/TrucksList/TruckService.service';
 import { TotalNewExpenseComponent } from '../TotalNewExpense/TotalNewExpense.component';
+import { TruckServiceService } from '../../Trucks/TruckService.service';
 
 @Component({
   selector: 'app-Expenses-list',

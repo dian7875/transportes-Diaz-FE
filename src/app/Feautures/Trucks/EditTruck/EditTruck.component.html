@@ -1,0 +1,42 @@
+<div class="p-6 bg-white rounded-xl shadow-xl w-96 text-black">
+  <h2 class="text-xl font-bold mb-4">Editar unidad</h2>
+
+  <form [formGroup]="truckForm" (ngSubmit)="onSubmit()">
+    <label class="block">Placa</label>
+    <input
+      formControlName="plate"
+      title="Placa"
+      type="text"
+      class="w-full p-2 border rounded mb-4 bg-gray-100 text-gray-600 cursor-not-allowed"
+      placeholder="ABC-123"
+      required
+      [readonly]="true"
+    />
+    <label class="block">Nombre</label>
+    <input
+      formControlName="name"
+      title="Nombre"
+      type="text"
+      class="w-full p-2 border rounded mb-4"
+      placeholder="Ford"
+      required
+    />
+
+    <div class="flex justify-around mt-4">
+      <p-button
+        [tabIndex]="2"
+        (onClick)="closeModal()"
+        severity="danger"
+        variant="outlined"
+        label="Cancelar"
+      />
+      <p-button
+        type="submit"
+        severity="info"
+        raised="true"
+        label="Guardar"
+        [disabled]="truckForm.invalid"
+      />
+    </div>
+  </form>
+</div>
