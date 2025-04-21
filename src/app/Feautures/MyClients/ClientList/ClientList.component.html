@@ -22,8 +22,18 @@
 
       <td>
         <div class="p-button-group flex gap-x-2 w-full">
-          <p-button severity="warn" label="Editar" icon="pi pi-file-edit" />
-          <p-button severity="danger" label="Eliminar" icon="pi pi-trash" />
+          <p-button
+            severity="warn"
+            label="Editar"
+            icon="pi pi-file-edit"
+            (onClick)="openEditClientModal(clients)"
+          />
+          <p-button
+            severity="danger"
+            label="Eliminar"
+            icon="pi pi-trash"
+            (onClick)="openDeleteClientModal(clients)"
+          />
         </div>
       </td>
     </tr>

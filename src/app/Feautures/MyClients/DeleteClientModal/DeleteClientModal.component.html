@@ -1,0 +1,27 @@
+<div class="p-6 bg-white rounded-xl shadow-xl w-96 text-black">
+    <h2 class="text-xl font-bold mb-4">Borrar cliente</h2>
+    <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+        <figure  class="flex flex-col items-center text-center ">
+            <img class="" src="https://cdn-icons-png.flaticon.com/128/4201/4201973.png" alt="WarningIcon">
+            <figcaption class="text-lg text-gray-400">Está seguro de borrar el usuario? <br> Esta opcion no es reversible</figcaption>
+        </figure>
+  
+      <div class="flex justify-around mt-5">
+        <p-button
+          [tabIndex]="2"
+          (onClick)="closeModal()"
+          severity="danger"
+          variant="outlined"
+          label="Cancelar"
+        />
+        <p-button
+          type="submit"
+          severity="info"
+          raised="true"
+          label="Aceptar"
+          [disabled]="clientForm.invalid"
+        />
+      </div>
+    </form>
+  </div>
+  

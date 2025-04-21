@@ -6,16 +6,16 @@ import { ButtonModule } from 'primeng/button';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { TableModule } from 'primeng/table';
 import { ClientsService } from '../clients.service';
-
+import { EditClientModalComponent } from '../EditClientModal/EditClientModal.component';
+import { DeleteClientModalComponent } from '../DeleteClientModal/DeleteClientModal.component';
 @Component({
   selector: 'app-ClientList',
   templateUrl: './ClientList.component.html',
   imports: [CommonModule, TableModule, ButtonModule, InputGroupModule],
 })
 export class ClientListComponent {
-
   constructor(private dialog: Dialog) {}
- 
+
   displayedColumns: string[] = ['id', 'name'];
   selectedClient: any[] = [];
   metaKey: boolean = false;
@@ -31,5 +31,15 @@ export class ClientListComponent {
     this.currentPage.set(page);
   }
 
-}
+  openEditClientModal(client: any) {
+    this.dialog.open(EditClientModalComponent, {
+      data: { client },
+    });
+  }
 
+  openDeleteClientModal(client: any) {
+    this.dialog.open(DeleteClientModalComponent, {
+      data: { client },
+    });
+  }
+}
