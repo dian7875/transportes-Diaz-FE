@@ -1,4 +1,8 @@
 <div class="p-6 bg-white rounded-xl shadow-xl w-96 text-black text-center">
+  <div class="flex justify-center mb-4 text-yellow-500 text-4xl">
+    <i class="pi pi-exclamation-triangle !text-5xl"></i>
+  </div>
+
   <h2 class="text-lg font-semibold mb-4">¿Estás seguro?</h2>
   <p class="mb-6">
     ¿Deseas deshabilitar
@@ -13,6 +17,10 @@
       variant="outlined"
       (onClick)="cancel()"
     />
-    <p-button label="Deshabilitar" severity="danger" (onClick)="confirmDelete()" />
+    <p-button
+       label="Aceptar"
+      severity="info"
+      (onClick)="confirmDelete()"
+    />
   </div>
 </div>
