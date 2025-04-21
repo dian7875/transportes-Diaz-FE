@@ -12,15 +12,43 @@ import { LoginComponent } from './Core/Auth/Login/Login.component';
 import { AuthGuardService } from './Core/Guards/AuthGuard.service';
 
 export const routes: Routes = [
-  { path: 'dashboard', component: HomeComponent ,canActivate: [AuthGuardService]},
-  { path: 'clientes', component: MyClientsComponent ,canActivate: [AuthGuardService]},
-  { path: 'transportes', component: TravelsComponent ,canActivate: [AuthGuardService]},
-  { path: 'choferes', component: DriversComponent ,canActivate: [AuthGuardService]},
-  { path: 'camiones', component: TrucksComponent ,canActivate: [AuthGuardService]},
-  { path: 'reportes', component: ReportsComponent ,canActivate: [AuthGuardService]},
-  { path: 'gastos', component: ExpensesComponent ,canActivate: [AuthGuardService]},
-  { path: 'facturas', component: InvoicesComponent ,canActivate: [AuthGuardService]},
-  { path: '', component: LoginComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
+  {
+    path: 'clientes',
+    component: MyClientsComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'transportes',
+    component: TravelsComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'choferes',
+    component: DriversComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'camiones',
+    component: TrucksComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'reportes',
+    component: ReportsComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'gastos',
+    component: ExpensesComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'facturas',
+    component: InvoicesComponent,
+    canActivate: [AuthGuardService],
+  },
+  { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: '' },
 ];
 

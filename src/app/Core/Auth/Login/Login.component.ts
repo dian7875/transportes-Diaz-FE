@@ -26,9 +26,6 @@ export class LoginComponent {
   }
 
   async onSubmit() {
-
-      console.log('Submit llamado');
-
     if (this.loginForm.invalid) {
       return;
     }
