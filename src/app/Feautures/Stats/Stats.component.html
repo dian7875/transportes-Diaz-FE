@@ -10,8 +10,8 @@
         [showButtonBar]="true"
       />
     </div>
-    <div class="flex min-h-[45vh]">
-      <div class="w-3/4">
+    <div class="flex min-h-[45vh] max-md:flex-col">
+      <div class="w-3/4 max-md:w-full">
         <ngx-charts-bar-vertical-2d
           class="w-full"
           [results]="secondData"
@@ -23,7 +23,7 @@
           [legend]="true"
         ></ngx-charts-bar-vertical-2d>
       </div>
-      <div class="w-1/4">
+      <div class="w-1/4 max-md:w-full">
         <ngx-charts-pie-chart
           class="w-full"
           [results]="data"
@@ -34,7 +34,7 @@
       </div>
     </div>
   </div>
-  <div class="grid grid-cols-5 gap-4">
+  <div class="grid grid-cols-5 gap-4 max-md:grid-cols-1">
     <app-CounterCard
       name="Camiones disponibles"
       [count]="generalCount.data()?.trucks ?? 0"

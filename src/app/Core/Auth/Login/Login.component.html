@@ -1,0 +1,54 @@
+<div
+  class="flex justify-center items-center min-h-screen bg-cover bg-center"
+
+>
+  <div class="bg-white bg-opacity-80 p-8 rounded-lg shadow-lg w-full max-w-md">
+    <h2 class="text-center text-2xl font-semibold text-gray-800 mb-6">
+      Iniciar Sesión
+    </h2>
+
+    <form [formGroup]="loginForm"  (ngSubmit)="onSubmit()">
+      <div class="mb-4">
+        <label
+          for="userName"
+          class="block text-gray-700 text-sm font-semibold mb-2"
+          >Nombre de Usuario</label
+        >
+        <input
+          id="username"
+          type="text"
+          formControlName="userName"
+          placeholder="Usuario"
+          class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div class="mb-6">
+        <label
+          for="password"
+          class="block text-gray-700 text-sm font-semibold mb-2"
+          >Contraseña</label
+        >
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Contraseña"
+          class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div class="flex justify-center">
+        <button
+          type="submit"
+          class="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+
+        >
+          Ingresar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

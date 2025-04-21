@@ -1,22 +1,38 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './Layout/header/header.component';
 import { Subscription } from 'rxjs';
 import { ToastModule } from 'primeng/toast';
+import { AuthServiceService } from './Core/Auth/AuthService.service';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, ToastModule],
+  imports: [RouterOutlet, ToastModule, CommonModule, HeaderComponent],
   templateUrl: './app.component.html',
   standalone: true,
 })
 export class AppComponent implements OnInit, OnDestroy {
-  sidebarOpen: boolean = false;
+  sidebarOpen = false;
+  showHeader = false;
+  private routerSubscription?: Subscription;
+  private authSubscription?: Subscription;
 
-  private routerSubscription: Subscription | undefined;
+  constructor(
+    private router: Router,
+    private authService: AuthServiceService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  constructor(private router: Router) {}
+  ngOnInit() {
+    this.authSubscription = this.authService.isAuthenticated$.subscribe(
+      (isAuth) => {
+        this.showHeader = isAuth;
+        this.cdr.detectChanges();
+      }
+    );
 
-  ngOnInit(): void {
+    this.authService.isAuthenticated();
+
     this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.sidebarOpen = false;
@@ -24,9 +40,8 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    if (this.routerSubscription) {
-      this.routerSubscription.unsubscribe();
-    }
+  ngOnDestroy() {
+    this.routerSubscription?.unsubscribe();
+    this.authSubscription?.unsubscribe();
   }
 }

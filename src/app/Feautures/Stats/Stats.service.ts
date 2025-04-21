@@ -1,47 +1,53 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../environments/environments';
+import { HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
+import axiosInstance from '../../Core/Config/axios.config';
+import axios from 'axios';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StatsService {
-  private http = inject(HttpClient);
-
-  private API_URL = environment.API_URL;
-
   async getStats(date?: Date): Promise<{ expenses: number; produced: number }> {
     try {
-      const params = new HttpParams().set('week', date?.toString() || '');
-      const response = await lastValueFrom(
-        this.http.get<{ expenses: number; produced: number }>(
-          `${this.API_URL}/stats`,
-          { params }
-        )
-      );
-      return response;
+      const params = { week: date?.toString() || '' };
+      const response = await axiosInstance.get<{
+        expenses: number;
+        produced: number;
+      }>('/stats', { params });
+      return response.data;
     } catch (error) {
-      console.error('Error al obtener los transportes:', error);
-      throw error;
+      if (axios.isAxiosError(error)) {
+        console.warn(error.response?.data.message);
+        throw new Error(error.response?.data.message);
+      } else {
+        console.error('Error al obtener las estadísticas:', error);
+        throw error;
+      }
     }
   }
+
+
   async getTruckStats(
     date?: Date
   ): Promise<{ name: string; series: { name: string; value: number }[] }[]> {
     try {
-      const params = new HttpParams().set('week', date?.toString() || '');
-      const response = await lastValueFrom(
-        this.http.get<
-          { name: string; series: { name: string; value: number }[] }[]
-        >(`${this.API_URL}/stats/TruckStats`, { params })
-      );
-      return response;
+      const params = { week: date?.toString() || '' };
+      const response = await axiosInstance.get<
+        { name: string; series: { name: string; value: number }[] }[]
+      >('/stats/TruckStats', { params });
+      return response.data;
     } catch (error) {
-      console.error('Error al obtener los transportes:', error);
-      throw error;
+      if (axios.isAxiosError(error)) {
+        console.warn(error.response?.data.message);
+        throw new Error(error.response?.data.message);
+      } else {
+        console.error('Error al obtener estadísticas de camiones:', error);
+        throw error;
+      }
     }
   }
+
   async getGeneralCounts(date?: Date): Promise<{
     clients: number;
     drivers: number;
@@ -50,20 +56,23 @@ export class StatsService {
     productivity: number;
   }> {
     try {
-      const params = new HttpParams().set('week', date?.toString() || '');
-      const response = await lastValueFrom(
-        this.http.get<{
-          clients: number;
-          drivers: number;
-          trucks: number;
-          TravelsCount: number;
-          productivity: number;
-        }>(`${this.API_URL}/stats/counts`, { params })
-      );
-      return response;
+      const params = { week: date?.toString() || '' };
+      const response = await axiosInstance.get<{
+        clients: number;
+        drivers: number;
+        trucks: number;
+        TravelsCount: number;
+        productivity: number;
+      }>('/stats/counts', { params });
+      return response.data;
     } catch (error) {
-      console.error('Error al obtener los transportes:', error);
-      throw error;
+      if (axios.isAxiosError(error)) {
+        console.warn(error.response?.data.message);
+        throw new Error(error.response?.data.message);
+      } else {
+        console.error('Error al obtener conteos generales:', error);
+        throw error;
+      }
     }
   }
 }

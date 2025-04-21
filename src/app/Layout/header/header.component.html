@@ -30,7 +30,7 @@
             >
               <li>
                 <a
-                  [routerLink]="['']"
+                  [routerLink]="['/dashboard']"
                   class="flex items-center cursor-pointer p-4 rounded-border"
                 >
                   <i class="pi pi-home mr-2"></i>
@@ -100,14 +100,14 @@
                   <span class="font-medium">Facturas</span>
                 </a>
               </li>
-              <li>
-                <a
-                  [routerLink]="['/facturas']"
-                  class="flex items-center cursor-pointer p-4 rounded-border hover:bg-red-50 hover:text-red-950"
+              <li (click)="logout()" class="cursor-pointer">
+                <button
+                  type="button"
+                  class="flex items-center w-full p-4 rounded-border hover:bg-red-50 hover:text-red-950"
                 >
                   <i class="pi pi-power-off mr-2"></i>
-                  <span class="font-medium">Cerrar sesion</span>
-                </a>
+                  <span class="font-medium">Cerrar sesión</span>
+                </button>
               </li>
             </ul>
           </div>
