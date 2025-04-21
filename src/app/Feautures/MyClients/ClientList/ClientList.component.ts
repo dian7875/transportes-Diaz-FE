@@ -8,6 +8,7 @@ import { TableModule } from 'primeng/table';
 import { ClientsService } from '../clients.service';
 import { EditClientModalComponent } from '../EditClientModal/EditClientModal.component';
 import { DeleteClientModalComponent } from '../DeleteClientModal/DeleteClientModal.component';
+import { Client } from '../Client';
 @Component({
   selector: 'app-ClientList',
   templateUrl: './ClientList.component.html',
@@ -16,7 +17,7 @@ import { DeleteClientModalComponent } from '../DeleteClientModal/DeleteClientMod
 export class ClientListComponent {
   constructor(private dialog: Dialog) {}
 
-  displayedColumns: string[] = ['id', 'name'];
+  displayedColumns: string[] = ['id', 'name', 'status'];
   selectedClient: any[] = [];
   metaKey: boolean = false;
   ClientService = inject(ClientsService);
@@ -31,15 +32,15 @@ export class ClientListComponent {
     this.currentPage.set(page);
   }
 
-  openEditClientModal(client: any) {
+  openEditClientModal(client: Client) {
     this.dialog.open(EditClientModalComponent, {
-      data: { client },
+      data: client,
     });
   }
 
-  openDeleteClientModal(client: any) {
+  openDeleteClientModal(client: Client) {
     this.dialog.open(DeleteClientModalComponent, {
-      data: { client },
+      data:  client ,
     });
   }
 }

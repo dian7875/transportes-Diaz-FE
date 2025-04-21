@@ -7,32 +7,42 @@
   [first]="(currentPage() - 1) * 6"
   [metaKeySelection]="metaKey"
   dataKey="id"
-  [tableStyle]="{ 'min-width': '50rem' }"
   (onPage)="loadPage($event.first / $event.rows + 1)"
 >
   <ng-template pTemplate="header">
     <tr>
-      <th class="w-5xl rounded-tl-lg">Nombre</th>
-      <th class="w-3xl rounded-tr-lg">Acciones</th>
+      <th class="rounded-tl-lg">ID</th>
+      <th class="">Nombre</th>
+      <th class="max-sm:hidden">Estado</th>
+      <th class="rounded-tr-lg">Acciones</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-clients let-rowIndex="rowIndex">
     <tr class="hover:!bg-gray-200">
+      <td>{{ clients.id }}</td>
       <td>{{ clients.name }}</td>
 
+      <td class=" max-sm:hidden">
+        <div
+          [ngClass]="clients.status ? 'active' : 'inactive'"
+          class="p-1 rounded-md w-2/3 text-center"
+        >
+          {{ clients.status ? "Activo" : "Inactivo" }}
+        </div>
+      </td>
       <td>
         <div class="p-button-group flex gap-x-2 w-full">
           <p-button
             severity="warn"
             label="Editar"
             icon="pi pi-file-edit"
-            (onClick)="openEditClientModal(clients)"
+            (click)="openEditClientModal(clients)"
           />
           <p-button
             severity="danger"
             label="Eliminar"
             icon="pi pi-trash"
-            (onClick)="openDeleteClientModal(clients)"
+            (click)="openDeleteClientModal(clients)"
           />
         </div>
       </td>
