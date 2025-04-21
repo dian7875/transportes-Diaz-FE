@@ -1,0 +1,18 @@
+<div class="p-6 bg-white rounded-xl shadow-xl w-96 text-black text-center">
+  <h2 class="text-lg font-semibold mb-4">¿Estás seguro?</h2>
+  <p class="mb-6">
+    ¿Deseas eliminar
+    <span class="font-bold" *ngIf="data?.name">{{ data.name }}</span>
+    ?
+  </p>
+
+  <div class="flex justify-around">
+    <p-button
+      label="Cancelar"
+      severity="secondary"
+      variant="outlined"
+      (onClick)="cancel()"
+    />
+    <p-button label="Deshabilitar" severity="danger" (onClick)="confirmDelete()" />
+  </div>
+</div>

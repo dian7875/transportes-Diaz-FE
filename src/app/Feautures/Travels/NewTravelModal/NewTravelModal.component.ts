@@ -21,7 +21,7 @@ import { InputNumber } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TruckServiceService } from '../../Trucks/TrucksList/TruckService.service';
 import { ClientsService } from '../../MyClients/clients.service';
-import { DriversService } from '../../Drivers/DriverList/driver.service';
+import { DriversService } from '../../Drivers/driver.service';
 import { from } from 'rxjs';
 
 interface newTravel {
@@ -105,7 +105,7 @@ export class NewTravelModalComponent implements OnInit {
         })
       )
       .subscribe(() => {
-      
+
       });
   }
   closeModal() {

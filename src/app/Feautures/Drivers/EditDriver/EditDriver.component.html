@@ -1,0 +1,56 @@
+<div class="p-6 bg-white rounded-xl shadow-xl w-96 text-black">
+  <form [formGroup]="driverForm" (ngSubmit)="onSubmit()">
+    <label class="">Cedula</label>
+    <input
+      formControlName="id"
+      title="id"
+      type="text"
+      class="w-full p-2 border rounded mb-4"
+      readonly
+      [disabled]="true"
+    />
+    <label class="">Nombre</label>
+    <input
+      formControlName="name"
+      title="Nombre"
+      type="text"
+      class="w-full p-2 border rounded mb-4"
+      placeholder="Adrian"
+      required
+    />
+    <label class="">Fecha de contratación</label>
+    <p-datePicker
+      formControlName="startDate"
+      class="text-white custom mb-4"
+      required
+      dataType="date"
+      placeholder="dd/mm/yy"
+      dateFormat="dd/mm/yy"
+    />
+    <label class="">Fecha de finalización</label>
+    <p-datePicker
+      formControlName="endDate"
+      class="text-white custom mb-4"
+      dataType="date"
+      placeholder="dd/mm/yy"
+      dateFormat="dd/mm/yy"
+    />
+
+    <div class="flex justify-around mt-5">
+      <p-button
+        [tabIndex]="2"
+        (onClick)="closeModal()"
+        severity="danger"
+        variant="outlined"
+        label="Cancelar"
+      />
+      <p-button
+        type="submit"
+        severity="info"
+        raised="true"
+        label="Guardar"
+        [disabled]="driverForm.invalid"
+      />
+    </div>
+  </form>
+</div>

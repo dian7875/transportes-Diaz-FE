@@ -1,54 +1,50 @@
-import { DialogRef } from '@angular/cdk/dialog';
+import { Component, inject, Inject, OnInit } from '@angular/core';
+import { Driver } from '../Drivers';
+import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
+import { DriversService } from '../driver.service';
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import {
-  ReactiveFormsModule,
-  FormGroup,
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
+import { from } from 'rxjs';
 import { HotToastService } from '@ngxpert/hot-toast';
 import {
-  QueryClient,
-} from '@tanstack/angular-query-experimental';
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { QueryClient } from '@tanstack/angular-query-experimental';
 import { ButtonModule } from 'primeng/button';
-import { DriversService } from '../driver.service';
 import { DatePicker } from 'primeng/datepicker';
-import { from } from 'rxjs';
-
-interface Driver {
-  id: number;
-  name: string;
-  startDate: Date;
-  endDate?: Date;
-  status: boolean;
-}
 
 @Component({
-  selector: 'app-NewDriverModal',
-  templateUrl: './NewDriverModal.component.html',
+  selector: 'app-EditDriver',
+  templateUrl: './EditDriver.component.html',
   imports: [CommonModule, ReactiveFormsModule, ButtonModule, DatePicker],
   providers: [DatePipe],
 })
-export class NewDriverModalComponent {
-  queryClient = inject(QueryClient);
+export class EditDriverComponent {
   driverForm: FormGroup;
+  queryClient = inject(QueryClient);
 
   constructor(
-    private dialogRef: DialogRef<NewDriverModalComponent>,
+    public dialogRef: DialogRef,
+    @Inject(DIALOG_DATA) public data: Driver,
     private driverService: DriversService,
     private fb: FormBuilder,
     private toast: HotToastService,
     private datePipe: DatePipe
   ) {
     this.driverForm = this.fb.group({
-      id: ['', [Validators.required]],
-      name: ['', [Validators.required]],
-      startDate: ['', [Validators.required]],
+      id: [data.id, [Validators.required]],
+      name: [data.name, [Validators.required]],
+      startDate: [
+        new Date(data.startDate + 'T00:00:00'),
+        [Validators.required],
+      ],
+      endDate: [data.endDate ? new Date(data.endDate + 'T00:00:00') : null],
     });
   }
 
-  async onSubmit() {
+  onSubmit() {
     if (this.driverForm.invalid) {
       return;
     }
@@ -58,21 +54,22 @@ export class NewDriverModalComponent {
       driver.startDate,
       'yyyy-MM-dd'
     );
+
     driver.startDate = formattedDate;
 
-    from(this.driverService.addDriver(driver))
+    from(this.driverService.patchDriver(driver))
       .pipe(
         this.toast.observe({
-          loading: 'Añadiendo conductor, por favor espere...',
+          loading: 'Actualizando conductor, por favor espere...',
           success: () => {
             this.queryClient.invalidateQueries({ queryKey: ['drivers'] });
             this.closeModal();
-            return 'Conductor agregado correctamente';
+            return 'Conductor actualizado correctamente';
           },
           error: (error) => {
             const errorMessage =
               (error as { message?: string }).message || 'Error desconocido';
-            return `Error al agregar el conductor: ${errorMessage}`;
+            return `Error al actualizar el conductor: ${errorMessage}`;
           },
         })
       )
@@ -80,7 +77,6 @@ export class NewDriverModalComponent {
   }
 
   closeModal() {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
-  ngOnInit() {}
 }
