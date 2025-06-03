@@ -10,6 +10,7 @@ import { InvoicesComponent } from './Feautures/invoices/invoices.component';
 import { HomeComponent } from './Pages/Home/Home.component';
 import { LoginComponent } from './Core/Auth/Login/Login.component';
 import { AuthGuardService } from './Core/Guards/AuthGuard.service';
+import { QuotesComponent } from './Feautures/quotes/quotes.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
@@ -47,6 +48,11 @@ export const routes: Routes = [
     path: 'facturas',
     component: InvoicesComponent,
     canActivate: [AuthGuardService],
+  },
+  {
+    path: 'cotizaciones',
+    component: QuotesComponent,
+    canActivate: [AuthGuardService]
   },
   { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: '' },
