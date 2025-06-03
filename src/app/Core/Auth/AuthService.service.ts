@@ -41,12 +41,17 @@ export class AuthServiceService {
   async LogIn(credentials: {
     userName: string;
     password: string;
-  }): Promise<{ message: string }> {
+  }): Promise<{ message: string; accessToken: string }> {
     try {
-      const response = await axiosInstance.post<{ message: string }>(
-        '/auth/login',
-        credentials
-      );
+      const response = await axiosInstance.post<{
+        message: string;
+        accessToken: string;
+      }>('/auth/login', credentials);
+
+      if (response.data.accessToken) {
+        localStorage.setItem('accessToken', response.data.accessToken);
+      }
+
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
