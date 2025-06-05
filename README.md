@@ -85,5 +85,5 @@ Accede a la aplicación desde:
 
 ## 🧑‍💻 Autor
 
-Desarrollado por [Adrian Aguilar Diaz](mailto:adrian.a.d7875@gmail.com)  
+Desarrollado por [Adrian Aguilar Diaz](mailto:dian7875.a@gmail.com)  
 📍 Nicoya, Guanacaste, Costa Rica
