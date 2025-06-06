@@ -2,60 +2,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { environment } from '../../../environments/environments';
+import axiosInstance from '../../Core/Config/axios.config';
+import axios from 'axios';
+import { ResponseData, newTravel } from './Travel';
 
-interface Driver {
-  id: number;
-  name: string;
-  startDate: string;
-  endDate: string | null;
-  status: boolean;
-}
-
-interface Truck {
-  plate: string;
-  name: string;
-}
-
-interface Client {
-  id: number;
-  name: string;
-}
-
-interface Travel {
-  id: number;
-  travelCode: string;
-  destination: string;
-  noIVAmount: number;
-  withIVAmount: number;
-  IVAmount: number;
-  travelDate: string;
-  driver: Driver;
-  truck: Truck;
-  client: Client;
-}
-interface Total {
-  IVA: number;
-  NoIVA: number;
-  total: number;
-}
-
-interface ResponseData {
-  data: Travel[];
-  count: number;
-  total: Total
-}
-
-
-interface newTravel {
-  travelCode: string;
-  destination: string;
-  noIVAmount: number;
-  withIVAmount: number;
-  travelDate: string;
-  driver_id: number;
-  truck_plate: string;
-  client_id: number;
-}
 
 @Injectable({
   providedIn: 'root',
@@ -78,7 +28,6 @@ export class TravelService {
       throw error;
     }
   }
-
 
   async getFilterTravels(
     page: number,
@@ -128,6 +77,23 @@ export class TravelService {
     } catch (error) {
       console.error('Error al agregar el transporte:', error);
       throw error;
+    }
+  }
+
+  async DeleteTravel(id: number): Promise<{ message: string }> {
+    try {
+      const response = await axiosInstance.delete<{ message: string }>(
+        `/travels/${id}`
+      );
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(error.response?.data.message);
+        throw Error(error.response?.data.message);
+      } else {
+        console.error('Error al editar el conductor:', error);
+        throw error;
+      }
     }
   }
 }

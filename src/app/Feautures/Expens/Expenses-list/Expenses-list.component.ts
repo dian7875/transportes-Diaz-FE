@@ -11,6 +11,7 @@ import { DatePicker } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { TotalNewExpenseComponent } from '../TotalNewExpense/TotalNewExpense.component';
 import { TruckServiceService } from '../../Trucks/TruckService.service';
+import { DeleteExpenComponent } from '../DeleteExpen/DeleteExpen.component';
 
 @Component({
   selector: 'app-Expenses-list',
@@ -24,7 +25,6 @@ import { TruckServiceService } from '../../Trucks/TruckService.service';
     FormsModule,
     SelectModule,
     DatePicker,
-
   ],
   providers: [DatePipe],
 })
@@ -35,7 +35,7 @@ export class ExpensesListComponent {
   selectedExpense: any[] = [];
   metaKey: boolean = false;
   expenseService = inject(ExpensesService);
-  truckService = inject(TruckServiceService)
+  truckService = inject(TruckServiceService);
 
   currentPage = signal(1);
   plate = signal('');
@@ -54,8 +54,7 @@ export class ExpensesListComponent {
 
   truckList = injectQuery(() => ({
     queryKey: ['truck-complete'],
-    queryFn: () =>
-      this.truckService.getTrucksList(),
+    queryFn: () => this.truckService.getTrucksList(),
   }));
 
   loadExpenses() {
@@ -70,6 +69,11 @@ export class ExpensesListComponent {
     this.dialog.open(TotalNewExpenseComponent);
   }
 
+  openDeleteModal(id: number) {
+    this.dialog.open(DeleteExpenComponent, {
+      data: id,
+    });
+  }
   loadPage(page: number) {
     this.currentPage.set(page);
   }

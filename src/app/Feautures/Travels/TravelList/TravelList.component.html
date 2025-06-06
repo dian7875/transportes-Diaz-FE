@@ -33,9 +33,17 @@
 
       <td>
         <div class="p-button-group flex gap-x-2 w-full">
-          <p-button severity="info" icon="pi pi-eye" />
-          <p-button severity="warn" icon="pi pi-file-edit" />
-          <p-button severity="danger" icon="pi pi-trash" />
+          <p-button
+            severity="info"
+            icon="pi pi-eye"
+            (click)="openInfoTravelModal(travels)"
+          />
+          <!--       <p-button severity="warn" icon="pi pi-file-edit" />-->
+          <p-button
+            severity="danger"
+            icon="pi pi-trash"
+            (click)="openDeleteTravelModal(travels.id)"
+          />
         </div>
       </td>
     </tr>

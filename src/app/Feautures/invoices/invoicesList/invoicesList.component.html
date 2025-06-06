@@ -81,8 +81,12 @@
       <td>{{ invoices.dueDate | date : "dd/MM/yyyy" }}</td>
       <td>
         <div class="p-button-group flex gap-x-2 w-full">
-          <p-button severity="warn" icon="pi pi-file-edit" />
-          <p-button severity="danger" icon="pi pi-trash" />
+          <!--       <p-button severity="warn" icon="pi pi-file-edit" />-->
+          <p-button
+            severity="danger"
+            icon="pi pi-trash"
+            (click)="openDelete(invoices.id)"
+          />
         </div>
       </td>
     </tr>

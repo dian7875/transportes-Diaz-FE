@@ -8,8 +8,8 @@ import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { NewExpensesModalComponent } from '../../Expens/NewExpensesModal/NewExpensesModal.component';
 import { TruckServiceService } from '../TruckService.service';
 import { Truck } from '../Trucks';
-import { DisableTruckComponent } from '../DisableTruck/DisableTruck.component';
 import { EditTruckComponent } from '../EditTruck/EditTruck.component';
+import { ChangeStatusComponent } from '../changeStatus/changeStatus.component';
 
 @Component({
   selector: 'Trucks-List',
@@ -42,7 +42,7 @@ export class TrucksList {
   }
 
   openDelete(truck: Truck) {
-    this.dialog.open(DisableTruckComponent, {
+    this.dialog.open(ChangeStatusComponent, {
       data: truck,
     });
   }

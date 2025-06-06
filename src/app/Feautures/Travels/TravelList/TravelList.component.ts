@@ -6,17 +6,27 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { TableModule } from 'primeng/table';
 import { TravelService } from '../Travel.service';
 import { injectQuery } from '@tanstack/angular-query-experimental';
+import { DeleteTravelComponent } from '../DeleteTravel/DeleteTravel.component';
+import { Travel } from '../Travel';
+import { TravelCompleteInfoComponent } from '../TravelCompleteInfo/TravelCompleteInfo.component';
 
 @Component({
   selector: 'app-TravelList',
   templateUrl: './TravelList.component.html',
   imports: [CommonModule, TableModule, ButtonModule, InputGroupModule],
-  providers:[DatePipe]
+  providers: [DatePipe],
 })
 export class TravelListComponent {
   constructor(private dialog: Dialog) {}
 
-  displayedColumns: string[] = ['travelCode', 'destination','noIVAmountt','withIVAmount','IVAmount','travelDate'];
+  displayedColumns: string[] = [
+    'travelCode',
+    'destination',
+    'noIVAmountt',
+    'withIVAmount',
+    'IVAmount',
+    'travelDate',
+  ];
   selectedClient: any[] = [];
   metaKey: boolean = false;
   travelService = inject(TravelService);
@@ -29,5 +39,16 @@ export class TravelListComponent {
 
   loadPage(page: number) {
     this.currentPage.set(page);
+  }
+
+  openDeleteTravelModal(id: number) {
+    this.dialog.open(DeleteTravelComponent, {
+      data: id,
+    });
+  }
+  openInfoTravelModal(travel: Travel) {
+    this.dialog.open(TravelCompleteInfoComponent, {
+      data: travel,
+    });
   }
 }

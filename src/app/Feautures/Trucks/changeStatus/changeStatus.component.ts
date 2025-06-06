@@ -1,19 +1,19 @@
+import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { CommonModule } from '@angular/common';
 import { Component, inject, Inject, OnInit } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { TruckServiceService } from '../TruckService.service';
-import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { QueryClient } from '@tanstack/angular-query-experimental';
-import { Truck } from '../Trucks';
+import { ButtonModule } from 'primeng/button';
 import { from } from 'rxjs';
+import { Truck } from '../Trucks';
+import { TruckServiceService } from '../TruckService.service';
 
 @Component({
-  selector: 'app-DisableTruck',
-  templateUrl: './DisableTruck.component.html',
+  selector: 'app-changeStatus',
+  templateUrl: './changeStatus.component.html',
   imports: [ButtonModule, CommonModule],
 })
-export class DisableTruckComponent {
+export class ChangeStatusComponent {
   queryClient = inject(QueryClient);
   constructor(
     public dialogRef: DialogRef<boolean>,
@@ -22,15 +22,15 @@ export class DisableTruckComponent {
     private toast: HotToastService
   ) {}
 
-  confirmDelete() {
+  confirmChange() {
     from(this.truckService.disableTruck(this.data.plate))
       .pipe(
         this.toast.observe({
-          loading: 'Deshabilitando camión, por favor espere...',
+          loading: 'Editando estado del camión, por favor espere...',
           success: () => {
             this.queryClient.invalidateQueries({ queryKey: ['trucks'] });
             this.cancel();
-            return 'Camión deshabilitado correctamente';
+            return 'Estado del Camión editado correctamente';
           },
           error: (error) => {
             const errorMessage =

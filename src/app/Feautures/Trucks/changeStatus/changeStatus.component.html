@@ -5,7 +5,7 @@
 
   <h2 class="text-lg font-semibold mb-4">¿Estás seguro?</h2>
   <p class="mb-6">
-    ¿Deseas deshabilitar
+    ¿Deseas cambiar el estado
     <span class="font-bold" *ngIf="data?.name">{{ data.name }}</span>
     ?
   </p>
@@ -20,7 +20,7 @@
     <p-button
        label="Aceptar"
       severity="info"
-      (onClick)="confirmDelete()"
+      (onClick)="confirmChange()"
     />
   </div>
 </div>

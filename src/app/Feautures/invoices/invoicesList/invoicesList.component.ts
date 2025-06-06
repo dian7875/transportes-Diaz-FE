@@ -18,6 +18,7 @@ import { ClientsService } from '../../MyClients/clients.service';
 import { InvoicesService } from '../invoices.service';
 import { ReportsService } from '../../Reports/Reports.service';
 import { HotToastService } from '@ngxpert/hot-toast';
+import { DeleteInvoiceComponent } from '../deleteInvoice/deleteInvoice.component';
 
 interface filterReport {
   startDate: string;
@@ -63,6 +64,12 @@ export class InvoicesListComponent {
 
   openModal() {
     this.dialog.open(NewInvoicesFormComponent);
+  }
+
+  openDelete(id: number) {
+    this.dialog.open(DeleteInvoiceComponent, {
+      data: id,
+    });
   }
 
   clientList = injectQuery(() => ({

@@ -4,11 +4,7 @@
   </div>
 
   <h2 class="text-lg font-semibold mb-4">¿Estás seguro?</h2>
-  <p class="mb-6">
-    ¿Deseas deshabilitar
-    <span class="font-bold" *ngIf="data?.name">{{ data.name }}</span>
-    ?
-  </p>
+  <p class="mb-6">¿Deseas eliminar el gasto ?</p>
 
   <div class="flex justify-around">
     <p-button
@@ -17,10 +13,6 @@
       variant="outlined"
       (onClick)="closeModal()"
     />
-    <p-button
-      label="Deshabilitar"
-      severity="danger"
-      (onClick)="confirmDelete()"
-    />
+    <p-button label="Confirmar" severity="info" (onClick)="confirmDelete()" />
   </div>
 </div>

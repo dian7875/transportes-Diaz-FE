@@ -1,7 +1,5 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
-import {
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { ButtonModule } from 'primeng/button';
@@ -15,10 +13,10 @@ import { from } from 'rxjs';
 @Component({
   selector: 'delete-client-modal',
   standalone: true,
-  templateUrl: './DeleteClientModal.component.html',
+  templateUrl: './ChangeStatusClientModal.component.html',
   imports: [CommonModule, ReactiveFormsModule, ButtonModule, InputTextModule],
 })
-export class DeleteClientModalComponent {
+export class ChangeStatustModalComponent {
   queryClient = inject(QueryClient);
   constructor(
     public dialogRef: DialogRef<boolean>,
@@ -30,7 +28,7 @@ export class DeleteClientModalComponent {
   closeModal() {
     this.dialogRef.close();
   }
-  confirmDelete() {
+  confirmChange() {
     from(this.clientService.disableClient(this.data.id))
       .pipe(
         this.toast.observe({

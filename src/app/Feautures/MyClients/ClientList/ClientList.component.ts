@@ -7,7 +7,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { TableModule } from 'primeng/table';
 import { ClientsService } from '../clients.service';
 import { EditClientModalComponent } from '../EditClientModal/EditClientModal.component';
-import { DeleteClientModalComponent } from '../DeleteClientModal/DeleteClientModal.component';
+import { ChangeStatustModalComponent } from '../ChangeStatusClientModal/ChangeStatusClientModal.component';
 import { Client } from '../Client';
 @Component({
   selector: 'app-ClientList',
@@ -39,7 +39,7 @@ export class ClientListComponent {
   }
 
   openDeleteClientModal(client: Client) {
-    this.dialog.open(DeleteClientModalComponent, {
+    this.dialog.open(ChangeStatustModalComponent, {
       data:  client ,
     });
   }

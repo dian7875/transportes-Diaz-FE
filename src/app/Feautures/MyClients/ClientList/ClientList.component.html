@@ -22,7 +22,7 @@
       <td>{{ clients.id }}</td>
       <td>{{ clients.name }}</td>
 
-      <td class=" max-sm:hidden">
+      <td class="max-sm:hidden">
         <div
           [ngClass]="clients.status ? 'active' : 'inactive'"
           class="p-1 rounded-md w-2/3 text-center"
@@ -39,9 +39,9 @@
             (click)="openEditClientModal(clients)"
           />
           <p-button
-            severity="danger"
-            label="Eliminar"
-            icon="pi pi-trash"
+            [severity]="clients.status ? 'danger' : 'info'"
+            [icon]="clients.status ? 'pi pi-ban' : 'pi pi-history'"
+            [label]="clients.status ? 'Deshabilitar' : 'Rehabilitar'"
             (click)="openDeleteClientModal(clients)"
           />
         </div>

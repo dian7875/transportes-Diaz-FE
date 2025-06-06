@@ -2,6 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { environment } from '../../../environments/environments';
+import axios from 'axios';
+import axiosInstance from '../../Core/Config/axios.config';
 
 interface newInvoice {
   invoicesNumber: string;
@@ -78,7 +80,9 @@ export class InvoicesService {
       }
 
       const response = await lastValueFrom(
-        this.http.get<dataRes>(`${this.API_URL}/invoices/InvoiceList`, { params })
+        this.http.get<dataRes>(`${this.API_URL}/invoices/InvoiceList`, {
+          params,
+        })
       );
       return response;
     } catch (error) {
@@ -96,6 +100,23 @@ export class InvoicesService {
     } catch (error) {
       console.error('Error al agregar la factura:', error);
       throw error;
+    }
+  }
+
+  async DeleteInvoice(id: number): Promise<{ message: string }> {
+    try {
+      const response = await axiosInstance.delete<{ message: string }>(
+        `/invoices/${id}`
+      );
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(error.response?.data.message);
+        throw Error(error.response?.data.message);
+      } else {
+        console.error('Error al eliminar la factura:', error);
+        throw error;
+      }
     }
   }
 }

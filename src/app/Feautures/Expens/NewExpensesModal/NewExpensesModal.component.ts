@@ -52,7 +52,7 @@ export class NewExpensesModalComponent {
   mutation = injectMutation(() => ({
     mutationFn: (expen: Expenses) => this.expenseService.addExpense(expen),
     onSuccess: () => {
-      this.queryCLient.invalidateQueries({ queryKey: ['Expens'] });
+      this.queryCLient.invalidateQueries({ queryKey: ['expense'] });
     },
   }));
 
@@ -68,6 +68,7 @@ export class NewExpensesModalComponent {
     try {
       this.mutation.mutate(expen);
       this.toast.success('Gasto agregado con exito');
+      this.queryCLient.invalidateQueries({ queryKey: ['expense'] });
       this.closeModal();
     } catch (error) {
       console.error('Error al agregar el gasto', error);

@@ -1,0 +1,23 @@
+<div
+  class="p-6 bg-white rounded-xl shadow-xl min-w-96 max-w-fit text-black text-left flex flex-col gap-4"
+>
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-xl">Resumen de transporte</h1>
+    <i
+    (click)="closeModal()"
+      class="pi pi-times-circle transition duration-300 hover:rotate-12 hover:text-red-500"
+      style="font-size: 1.5rem"
+    ></i>
+  </div>
+  <p class="leading-loose">
+    <strong>Nombre de referencia: </strong>{{ travel.travelCode }} <br />
+    <strong>Destino: </strong>{{ travel.destination }} <br />
+    <strong>Cliente: </strong>{{ travel.client.name }} <br />
+    <strong>Conductor: </strong>{{ travel.driver.name }} <br />
+    <strong>Camion: </strong>{{ travel.truck.name }} <br />
+    <strong>Fecha: </strong>{{ travel.travelDate }} <br />
+    <strong>IVA: </strong>{{ travel.IVAmount }} <br />
+    <strong>Total sin IVA: </strong>{{ travel.noIVAmount }} <br />
+    <strong>Total: </strong>{{ travel.withIVAmount }} <br />
+  </p>
+</div>
