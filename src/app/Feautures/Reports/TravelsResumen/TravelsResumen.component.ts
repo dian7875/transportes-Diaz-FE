@@ -54,7 +54,7 @@ export class TravelsResumenComponent {
 
   mutation = injectMutation(() => ({
     mutationFn: (filterR: filterReport) =>
-      this.reportService.downloadLoanReport(filterR),
+      this.reportService.downloadReport(filterR),
   }));
 
   get isLoading() {

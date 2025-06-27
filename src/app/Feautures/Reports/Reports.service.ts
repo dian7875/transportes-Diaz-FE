@@ -6,6 +6,7 @@ import {
 import { inject, Injectable } from '@angular/core';
 import { filter, lastValueFrom } from 'rxjs';
 import { environment } from '../../../environments/environments';
+import axiosInstance from '../../Core/Config/axios.config';
 
 interface filter {
   startDate?: string;
@@ -23,7 +24,7 @@ export class ReportsService {
 
   private API_URL = environment.API_URL;
 
-  async downloadLoanReport(filter: filter) {
+  async downloadReport(filter: filter) {
     try {
       const response = await lastValueFrom(
         this.http.post(
@@ -50,6 +51,58 @@ export class ReportsService {
       const errorJson = JSON.parse(errorText);
       throw new Error(errorJson.message);
     }
+  }
+
+  async downloadExcel(client_id:number) {
+
+    try {
+      const response = await axiosInstance.post(
+        '/Reports/GenerateXLSX',
+        {
+          client_id: client_id || '',
+        },
+        {
+          responseType: 'blob',
+        }
+      );
+
+      const blob = new Blob([response.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+
+      link.setAttribute('download', 'Facturas_Pendientes.xlsx');
+
+      document.body.appendChild(link);
+      link.click();
+
+      link.parentNode?.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error: any) {
+      if (
+        error.response &&
+        error.response.data instanceof Blob &&
+        error.response.data.type.includes('application/json')
+      ) {
+        const errorText = await error.response.data.text();
+
+        let errorJson;
+        try {
+          errorJson = JSON.parse(errorText);
+        } catch {
+          throw new Error('Error al interpretar la respuesta del servidor');
+        }
+        throw new Error(errorJson.message || 'Error del servidor');
+      } else {
+        throw new Error(error.message || 'Error desconocido');
+      }
+    }
+
+
+
   }
 
   downloadFile = (data: Blob, fileName: string) => {

@@ -84,6 +84,12 @@ export class InvoicesListComponent {
         this.downloadReport();
       },
     },
+    {
+      label: 'Generar Excel',
+      command: () => {
+        this.generateExcel();
+      },
+    },
   ];
 
   invoicesList = injectQuery(() => ({
@@ -105,7 +111,11 @@ export class InvoicesListComponent {
 
   mutation = injectMutation(() => ({
     mutationFn: (filterR: filterReport) =>
-      this.reportService.downloadLoanReport(filterR),
+      this.reportService.downloadReport(filterR),
+  }));
+  mutationExcel = injectMutation(() => ({
+    mutationFn: (client_Id: number) =>
+      this.reportService.downloadExcel(client_Id),
   }));
 
   get isLoading() {
@@ -128,6 +138,21 @@ export class InvoicesListComponent {
         onError: (error) => {
           this.toast.error(error.message);
           console.error(error);
+        },
+      }
+    );
+  }
+
+  async generateExcel() {
+    this.mutationExcel.mutate(
+      Number(this.client_id()),
+      {
+        onSuccess: () => {
+          this.toast.success('Reporte descargado con éxito');
+        },
+        onError: (error) => {
+          this.toast.error(error.message);
+          console.error(error.message);
         },
       }
     );
