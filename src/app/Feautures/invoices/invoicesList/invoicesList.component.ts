@@ -51,6 +51,7 @@ export class InvoicesListComponent {
   client_id = signal('');
   startDate = signal<Date | null>(null);
   endDate = signal(new Date());
+  status_opt = signal(1);
 
   metaKey: boolean = false;
   invoiceService = inject(InvoicesService);
@@ -77,6 +78,13 @@ export class InvoicesListComponent {
     queryFn: () => this.clientService.getClientList(),
   }));
 
+
+
+  statusOptions = [
+    { label: 'Pendiente', value: 1 },
+    { label: 'Cancelado', value: 0 },
+  ];
+
   splitButtonItems = [
     {
       label: 'Generar Reporte',
@@ -99,13 +107,15 @@ export class InvoicesListComponent {
       this.endDate(),
       this.startDate(),
       this.currentPage(),
+      this.status_opt(),
     ],
     queryFn: () =>
       this.invoiceService.getInvoices(
         this.currentPage(),
+        this.status_opt(),
         Number(this.client_id()) ?? undefined,
         this.startDate() ?? undefined,
-        this.endDate() ?? undefined
+        this.endDate() ?? undefined,
       ),
   }));
 
@@ -144,18 +154,15 @@ export class InvoicesListComponent {
   }
 
   async generateExcel() {
-    this.mutationExcel.mutate(
-      Number(this.client_id()),
-      {
-        onSuccess: () => {
-          this.toast.success('Reporte descargado con éxito');
-        },
-        onError: (error) => {
-          this.toast.error(error.message);
-          console.error(error.message);
-        },
-      }
-    );
+    this.mutationExcel.mutate(Number(this.client_id()), {
+      onSuccess: () => {
+        this.toast.success('Reporte descargado con éxito');
+      },
+      onError: (error) => {
+        this.toast.error(error.message);
+        console.error(error.message);
+      },
+    });
   }
 
   loadPage(page: number) {

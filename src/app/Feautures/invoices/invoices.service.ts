@@ -60,12 +60,15 @@ export class InvoicesService {
 
   async getInvoices(
     page: number,
+    status:number,
     client_id?: number,
     startDate?: Date,
-    endDate?: Date
+    endDate?: Date,
   ): Promise<dataRes> {
     try {
       let params = new HttpParams().set('page', page.toString());
+
+      params = params.set('status', status);
 
       if (client_id) {
         params = params.set('client_id', client_id.toString());
@@ -78,6 +81,8 @@ export class InvoicesService {
       if (endDate) {
         params = params.set('endDate', endDate.toISOString().split('T')[0]);
       }
+
+
 
       const response = await lastValueFrom(
         this.http.get<dataRes>(`${this.API_URL}/invoices/InvoiceList`, {

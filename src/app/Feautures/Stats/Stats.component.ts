@@ -9,7 +9,7 @@ import { DatePicker } from 'primeng/datepicker';
 @Component({
   selector: 'app-Stats',
   templateUrl: './Stats.component.html',
-  imports: [NgxChartsModule, CounterCardComponent, FormsModule, DatePicker],
+  imports: [NgxChartsModule, CounterCardComponent, FormsModule, DatePicker, ],
 })
 export class StatsComponent {
   constructor(private statService: StatsService) {}

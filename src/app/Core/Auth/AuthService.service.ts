@@ -19,7 +19,21 @@ export class AuthServiceService {
       const result = response.data.isAuthenticated;
       this.isAuthenticatedSubject.next(result);
       return result;
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response?.status == 401) {
+        try {
+          await axiosInstance.post('/auth/refresh');
+          const retry = await axiosInstance.get('/auth/status', {
+            withCredentials: true,
+          });
+          const result = retry.data.isAuthenticated;
+          this.isAuthenticatedSubject.next(result);
+          return result;
+        } catch (error) {
+          this.isAuthenticatedSubject.next(false);
+          return false;
+        }
+      }
       this.isAuthenticatedSubject.next(false);
       return false;
     }

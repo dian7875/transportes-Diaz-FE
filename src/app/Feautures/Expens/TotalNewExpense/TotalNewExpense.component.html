@@ -12,14 +12,13 @@
       placeholder="Seleccione el camion"
       required
     />
-    <label class="block mb-2">Monto</label>
-    <input
+    <label>Monto</label>
+    <p-inputNumber
+      class="w-full custom-NI"
       formControlName="mount"
-      title="Monto"
-      type="number"
-      class="w-full p-2 border rounded mb-4"
-      placeholder="$"
-      required
+      mode="decimal"
+      [maxFractionDigits]="2"
+      placeholder="Ingrese el monto"
     />
 
     <label class="block mb-2">Descripcion</label>

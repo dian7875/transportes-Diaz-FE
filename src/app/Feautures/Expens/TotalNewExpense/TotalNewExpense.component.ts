@@ -20,6 +20,7 @@ import { HotToastService } from '@ngxpert/hot-toast';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { SelectModule } from 'primeng/select';
 import { TruckServiceService } from '../../Trucks/TruckService.service';
+import { InputNumber } from 'primeng/inputnumber';
 
 interface NewExpense {
   mount: number;
@@ -36,7 +37,7 @@ interface NewExpense {
     ReactiveFormsModule,
     ButtonModule,
     DatePicker,
-
+    InputNumber,
     InputGroupModule,
     FormsModule,
     SelectModule,
@@ -70,7 +71,7 @@ export class TotalNewExpenseComponent {
   mutation = injectMutation(() => ({
     mutationFn: (expen: NewExpense) => this.expenseService.addExpense(expen),
     onSuccess: () => {
-      this.queryCLient.invalidateQueries({ queryKey: ['Expens'] });
+      this.queryCLient.invalidateQueries({ queryKey: ['expenses'] });
     },
   }));
 
@@ -100,6 +101,4 @@ export class TotalNewExpenseComponent {
   closeModal() {
     this.dialogRef.close();
   }
-
-
 }

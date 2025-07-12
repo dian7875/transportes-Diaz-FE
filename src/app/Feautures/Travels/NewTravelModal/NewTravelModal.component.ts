@@ -10,7 +10,6 @@ import {
 import { HotToastService } from '@ngxpert/hot-toast';
 import {
   QueryClient,
-  injectMutation,
   injectQuery,
 } from '@tanstack/angular-query-experimental';
 import { ButtonModule } from 'primeng/button';

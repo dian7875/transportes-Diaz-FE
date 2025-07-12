@@ -15,6 +15,7 @@ import { ButtonModule } from 'primeng/button';
 import { ExpensesService } from '../Expenses/Expenses.service';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { DatePicker } from 'primeng/datepicker';
+import { InputNumber } from 'primeng/inputnumber';
 
 interface Expenses {
   mount: number;
@@ -26,7 +27,7 @@ interface Expenses {
 @Component({
   selector: 'app-NewExpensesModal',
   templateUrl: './NewExpensesModal.component.html',
-  imports: [CommonModule, ReactiveFormsModule, ButtonModule, DatePicker],
+  imports: [CommonModule, ReactiveFormsModule, ButtonModule, DatePicker, InputNumber ],
   providers: [DatePipe],
 })
 export class NewExpensesModalComponent {

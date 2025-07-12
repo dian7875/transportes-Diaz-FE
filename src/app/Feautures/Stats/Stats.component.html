@@ -12,16 +12,25 @@
     </div>
     <div class="flex min-h-[45vh] max-md:flex-col">
       <div class="w-3/4 max-md:w-full">
-        <ngx-charts-bar-vertical-2d
-          class="w-full"
-          [results]="secondData"
-          [gradient]="false"
-          [xAxis]="true"
-          [yAxis]="true"
-          [showXAxisLabel]="true"
-          [xAxisLabel]="xAxisLabel"
-          [legend]="true"
-        ></ngx-charts-bar-vertical-2d>
+        <ng-container
+          *ngIf="secondData && secondData.length > 0; else noDataBar"
+        >
+          <ngx-charts-bar-vertical-2d
+            class="w-full"
+            [results]="secondData"
+            [gradient]="false"
+            [xAxis]="true"
+            [yAxis]="true"
+            [showXAxisLabel]="true"
+            [xAxisLabel]="xAxisLabel"
+            [legend]="true"
+          ></ngx-charts-bar-vertical-2d>
+        </ng-container>
+        <ng-template #noDataBar>
+          <div class="text-center text-gray-500 py-8">
+            Sin datos para la semana a consultar.
+          </div>
+        </ng-template>
       </div>
       <div class="w-1/4 max-md:w-full">
         <ngx-charts-pie-chart
