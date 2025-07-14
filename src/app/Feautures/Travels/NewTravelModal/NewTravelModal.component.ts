@@ -8,10 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { HotToastService } from '@ngxpert/hot-toast';
-import {
-  QueryClient,
-  injectQuery,
-} from '@tanstack/angular-query-experimental';
+import { QueryClient, injectQuery } from '@tanstack/angular-query-experimental';
 import { ButtonModule } from 'primeng/button';
 import { DatePicker } from 'primeng/datepicker';
 import { TravelService } from '../Travel.service';
@@ -32,6 +29,7 @@ interface newTravel {
   driver_id: number;
   truck_plate: string;
   client_id: number;
+  ExcludeIVA: number;
 }
 
 @Component({
@@ -71,6 +69,7 @@ export class NewTravelModalComponent implements OnInit {
       client_id: ['', [Validators.required]],
       amount: [null, [Validators.required]],
       isWithIV: [false],
+      ExcludeIVA: [false],
     });
   }
 
@@ -103,9 +102,7 @@ export class NewTravelModalComponent implements OnInit {
           },
         })
       )
-      .subscribe(() => {
-
-      });
+      .subscribe(() => {});
   }
   closeModal() {
     this.dialogRef.close();
@@ -126,5 +123,18 @@ export class NewTravelModalComponent implements OnInit {
     queryFn: () => this.driverService.getDriversList(),
   }));
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.travelForm.get('isWithIV')?.valueChanges.subscribe((value) => {
+      if (value) {
+        this.travelForm
+          .get('ExcludeIVA')
+          ?.setValue(false, { emitEvent: false });
+      }
+    });
+    this.travelForm.get('ExcludeIVA')?.valueChanges.subscribe((value) => {
+      if (value) {
+        this.travelForm.get('isWithIV')?.setValue(false, { emitEvent: false });
+      }
+    });
+  }
 }

@@ -31,9 +31,15 @@
         placeholder="Ingrese el monto"
       />
 
-      <div class="mt-2 flex items-center">
-        <p-checkbox binary="true" formControlName="isWithIV"></p-checkbox>
-        <label class="ml-2">IVA incluido</label>
+      <div class="mt-2 flex items-center  justify-between">
+        <div>
+          <p-checkbox binary="true" formControlName="isWithIV"></p-checkbox>
+          <label class="ml-2">IVA incluido</label>
+        </div>
+        <div>
+          <p-checkbox binary="true" formControlName="ExcludeIVA"></p-checkbox>
+          <label class="ml-2">Excento de IVA</label>
+        </div>
       </div>
     </div>
 

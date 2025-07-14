@@ -49,4 +49,5 @@ export interface newTravel {
   driver_id: number;
   truck_plate: string;
   client_id: number;
+  ExcludeIVA:boolean;
 }
