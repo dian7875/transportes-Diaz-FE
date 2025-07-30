@@ -4,20 +4,23 @@
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-xl">Resumen de transporte</h1>
     <i
-    (click)="closeModal()"
+      (click)="closeModal()"
       class="pi pi-times-circle transition duration-300 hover:rotate-12 hover:text-red-500"
       style="font-size: 1.5rem"
     ></i>
   </div>
   <p class="leading-loose">
-    <strong>Nombre de referencia: </strong>{{ travel.travelCode }} <br />
+    <strong>Numero de referencia: </strong>{{ travel.travelCode }} <br />
     <strong>Destino: </strong>{{ travel.destination }} <br />
     <strong>Cliente: </strong>{{ travel.client.name }} <br />
     <strong>Conductor: </strong>{{ travel.driver.name }} <br />
     <strong>Camion: </strong>{{ travel.truck.name }} <br />
     <strong>Fecha: </strong>{{ travel.travelDate }} <br />
-    <strong>IVA: </strong>{{ travel.IVAmount }} <br />
     <strong>Total sin IVA: </strong>{{ travel.noIVAmount }} <br />
-    <strong>Total: </strong>{{ travel.withIVAmount }} <br />
+    <strong>IVA: </strong>{{ travel.IVAmount }} <br />
+    <strong>Total: </strong>{{ travel.noIVAmount + travel.IVAmount }} <br />
+    <button type="button" (click)="openExpensesModal()" class="text-blue-600 underline">
+      Ver gastos
+    </button>
   </p>
 </div>

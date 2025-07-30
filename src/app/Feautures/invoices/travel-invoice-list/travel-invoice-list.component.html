@@ -1,0 +1,35 @@
+<div
+  class="p-6 bg-white rounded-xl shadow-xl min-w-96 max-w-2xl text-black flex flex-col gap-4 custom-scroll"
+  style="max-height: 80vh; overflow-y: auto"
+>
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-lg font-semibold">Viajes asociados</h2>
+    <i
+      class="pi pi-times-circle text-xl cursor-pointer hover:text-red-500"
+      (click)="dialogRef.close()"
+    ></i>
+  </div>
+  <p-table [value]="data.travels">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Numero de Albaran/FAC</th>
+        <th>Destino</th>
+        <th>Fecha</th>
+        <th>Monto</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-travel>
+      <tr>
+        <td>{{ travel.travelCode }}</td>
+        <td>{{ travel.destination }}</td>
+        <td>{{ travel.travelDate }}</td>
+        <td>
+          {{
+            travel.IVAmount + travel.noIVAmount
+              | currency : "₡" : "symbol" : "1.0-2"
+          }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

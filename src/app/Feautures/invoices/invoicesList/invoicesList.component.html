@@ -43,13 +43,13 @@
     <div>
       <label for="status">Estado</label>
       <p-select
-      id="status"
-      class="custom-select"
-      [options]="statusOptions"
-      optionLabel="label"
-      optionValue="value"
-      [(ngModel)]="status_opt"
-      placeholder="Seleccione el estado"
+        id="status"
+        class="custom-select"
+        [options]="statusOptions"
+        optionLabel="label"
+        optionValue="value"
+        [(ngModel)]="status_opt"
+        placeholder="Seleccione el estado"
       />
     </div>
   </div>
@@ -93,7 +93,11 @@
       <td>{{ invoices.dueDate | date : "dd/MM/yyyy" }}</td>
       <td>
         <div class="p-button-group flex gap-x-2 w-full">
-          <!--       <p-button severity="warn" icon="pi pi-file-edit" />-->
+          <p-button
+            icon="pi pi-search"
+            severity="success"
+            (click)="openTravelsList(invoices)"
+          />
           <p-button
             severity="danger"
             icon="pi pi-trash"

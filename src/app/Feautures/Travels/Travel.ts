@@ -15,6 +15,12 @@ export interface Client {
   id: number;
   name: string;
 }
+export interface Expense {
+  id: number;
+  name: string;
+  mount: number,
+  date: string
+}
 
 export interface Travel {
   id: number;
@@ -27,6 +33,7 @@ export interface Travel {
   driver: Driver;
   truck: Truck;
   client: Client;
+  expenses: Expense[]
 }
 export interface Total {
   IVA: number;

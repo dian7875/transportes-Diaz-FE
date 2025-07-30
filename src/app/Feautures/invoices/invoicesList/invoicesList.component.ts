@@ -19,12 +19,23 @@ import { InvoicesService } from '../invoices.service';
 import { ReportsService } from '../../Reports/Reports.service';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { DeleteInvoiceComponent } from '../deleteInvoice/deleteInvoice.component';
+import { TravelInvoiceListComponent } from '../travel-invoice-list/travel-invoice-list.component';
+import { Travel } from '../../Travels/Travel';
 
 interface filterReport {
   startDate: string;
   endDate: string;
   client_id: string;
   reportType: string;
+}
+
+interface invoice {
+  id: number;
+  invoicesNumber: string;
+  invoiceAmount: number;
+  invoiceDate: Date;
+  dueDate: Date;
+  travels: Travel;
 }
 
 @Component({
@@ -78,8 +89,6 @@ export class InvoicesListComponent {
     queryFn: () => this.clientService.getClientList(),
   }));
 
-
-
   statusOptions = [
     { label: 'Pendiente', value: 1 },
     { label: 'Cancelado', value: 0 },
@@ -115,7 +124,7 @@ export class InvoicesListComponent {
         this.status_opt(),
         Number(this.client_id()) ?? undefined,
         this.startDate() ?? undefined,
-        this.endDate() ?? undefined,
+        this.endDate() ?? undefined
       ),
   }));
 
@@ -167,5 +176,12 @@ export class InvoicesListComponent {
 
   loadPage(page: number) {
     this.currentPage.set(page);
+  }
+
+  openTravelsList(invoice: invoice) {
+    this.dialog.open(TravelInvoiceListComponent, {
+      data: { travels: invoice.travels },
+      width: '600px',
+    });
   }
 }
