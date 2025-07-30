@@ -49,7 +49,12 @@
       />
     </div>
     <div>
-      <label for="invoiceAmount">Monto</label>
+      <div class="flex justify-between">
+        <details (click)="openTravelsModal()" class="hover:text-blue-700 cursor-pointer">
+          <summary>Ver detalles</summary>
+        </details>
+        <label for="invoiceAmount">Monto</label>
+      </div>
       <p-inputNumber
         id="invoiceAmount"
         formControlName="invoiceAmount"

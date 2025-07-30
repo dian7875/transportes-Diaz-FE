@@ -4,6 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { environment } from '../../../environments/environments';
 import axios from 'axios';
 import axiosInstance from '../../Core/Config/axios.config';
+import { Travel } from '../Travels/Travel';
 
 interface newInvoice {
   invoicesNumber: string;
@@ -41,7 +42,7 @@ export class InvoicesService {
     client_id: number,
     startDate: Date,
     endDate: Date
-  ): Promise<{ total: number }> {
+  ): Promise<{travels:Travel[], total: number }> {
     try {
       const params = new HttpParams()
         .set('client_id', client_id.toString())
@@ -49,7 +50,10 @@ export class InvoicesService {
         .set('endDate', endDate.toISOString().split('T')[0]);
 
       const response = await lastValueFrom(
-        this.http.get<{ total: number }>(`${this.API_URL}/invoices`, { params })
+        this.http.get<{ travels: Travel[]; total: number }>(
+          `${this.API_URL}/invoices`,
+          { params }
+        )
       );
       return response;
     } catch (error) {

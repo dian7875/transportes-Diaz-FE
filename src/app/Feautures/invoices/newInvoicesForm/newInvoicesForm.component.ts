@@ -1,4 +1,4 @@
-import { DialogRef } from '@angular/cdk/dialog';
+import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { CommonModule, DatePipe } from '@angular/common';
 import {
   Component,
@@ -29,6 +29,8 @@ import { InputNumber } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InvoicesService } from '../invoices.service';
 import { from } from 'rxjs';
+import { TableModule } from 'primeng/table';
+import { TravelSelecctionComponent } from '../travel-selecction/travel-selecction.component';
 
 interface newInvoice {
   invoicesNumber: string;
@@ -36,6 +38,10 @@ interface newInvoice {
   dueDate: Date;
   invoiceDate: Date;
   client_id: number;
+}
+interface TravelSelectionResult {
+  selectedIds: number[];
+  totalAmount: number;
 }
 
 @Component({
@@ -52,16 +58,18 @@ interface newInvoice {
     FormsModule,
     InputNumber,
     InputTextModule,
+    TableModule,
   ],
   providers: [DatePipe],
 })
 export class NewInvoicesFormComponent {
   queryClient = inject(QueryClient);
   InvoiceForm: FormGroup;
-
+  dialog = inject(Dialog);
   client_id = signal('');
   startDate = signal(new Date());
   endDate = signal(new Date());
+  travelsData: any[] = [];
 
   constructor(
     private dialogRef: DialogRef<NewInvoicesFormComponent>,
@@ -75,13 +83,15 @@ export class NewInvoicesFormComponent {
       invoicesNumber: ['', [Validators.required]],
       dueDate: ['', [Validators.required]],
       invoiceDate: ['', [Validators.required]],
+      id_travel_list: this.fb.control([], Validators.required),
     });
   }
+
   async onSubmit() {
     if (this.InvoiceForm.invalid) {
       return;
     }
-
+    
     const invoice = this.InvoiceForm.value;
     const dueFormattedDate = this.datePipe.transform(
       invoice.dueDate,
@@ -145,11 +155,44 @@ export class NewInvoicesFormComponent {
     this.dialogRef.close();
   }
 
+  openTravelsModal() {
+    const dialogRef = this.dialog.open<
+      TravelSelecctionComponent,
+      TravelSelectionResult
+    >(TravelSelecctionComponent, { width: '800px' });
+
+    const instance = dialogRef.componentInstance as TravelSelecctionComponent;
+
+    instance.travels = this.travelsData;
+    instance.selectedIds = this.InvoiceForm.value.id_travel_list ?? [];
+
+    dialogRef.closed.subscribe((result) => {
+      if (result) {
+        this.InvoiceForm.patchValue({ id_travel_list: result.selectedIds });
+        this.InvoiceForm.patchValue({ invoiceAmount: result.totalAmount });
+      }
+    });
+  }
+
   ngDoCheck(): void {
     const totalData = this.total.data();
-    if(!this.isInitialLoad) {
+
+    if (totalData?.travels) {
+      this.travelsData = totalData.travels;
+
+      if (
+        (!this.InvoiceForm.value.id_travel_list ||
+          this.InvoiceForm.value.id_travel_list.length === 0) &&
+        this.travelsData.length > 0
+      ) {
+        const allIds = this.travelsData.map((t) => t.id);
+        this.InvoiceForm.patchValue({ id_travel_list: allIds });
+      }
+    }
+
+    if (!this.isInitialLoad) {
       return;
-    }  else if (totalData && totalData.total !== undefined) {
+    } else if (totalData && totalData.total !== undefined) {
       this.InvoiceForm.patchValue({ invoiceAmount: totalData.total });
       this.InvoiceForm.patchValue({ client_id: this.client_id() });
       this.isInitialLoad = false;
