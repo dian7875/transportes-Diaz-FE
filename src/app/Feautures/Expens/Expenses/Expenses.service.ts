@@ -92,4 +92,21 @@ export class ExpensesService {
       }
     }
   }
+
+  async addExpenses(expenses: Expenses[]) {
+    try {
+      const response = await axiosInstance.post('expenses/expensesList', expenses);
+      const res = response.data;
+      console.log(res)
+      return res
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(error.response?.data.message);
+        throw Error(error.response?.data.message);
+      } else {
+        console.error('Error al agregar los gastos:', error);
+        throw error;
+      }
+    }
+  }
 }

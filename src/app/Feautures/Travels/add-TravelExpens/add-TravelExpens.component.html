@@ -1,0 +1,101 @@
+<form class="w-full flex flex-col justify-center items-center">
+  <div
+    class="p-6 w-full max-w-[900px] h-full max-h-[90vh] rounded-xl flex flex-col bg-white text-black"
+  >
+    <h2 class="text-xl font-bold mb-4">Añadir nuevos gastos al viaje</h2>
+    <div [formGroup]="expenseForm">
+      <fieldset class="flex gap-2 items-end">
+        <div>
+          <label for="name">Nombre</label>
+          <input
+            formControlName="name"
+            type="text"
+            class="w-full p-2 border rounded mb-2"
+            placeholder="EJ:Chofer"
+            required
+          />
+        </div>
+        <div>
+          <label for="mount">Monto</label>
+          <p-inputNumber
+            formControlName="mount"
+            class="w-full custom-NI mb-2"
+            mode="decimal"
+            [maxFractionDigits]="2"
+            placeholder="Ingrese monto del gasto"
+          />
+        </div>
+        <div>
+          <label for="date">Fecha</label>
+          <p-datePicker
+            formControlName="date"
+            class="text-white custom mb-2"
+            required
+            dataType="date"
+            placeholder="dd/mm/yy"
+            dateFormat="dd/mm/yy"
+          />
+        </div>
+        <p-button
+          [disabled]="expenseForm.invalid"
+          class="mb-2"
+          (onClick)="addExpens()"
+          type="button"
+        >
+          <i class="pi pi-check" style="color: slateblue"></i>
+        </p-button>
+      </fieldset>
+    </div>
+    <div *ngIf="(expensesList.get('expenses')?.value?.length || 0) > 0">
+      <p-table
+        scrollDirection="horizontal"
+        [scrollable]="true"
+        scrollHeight="400px"
+        [value]="expensesList.get('expenses')?.value"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="w-xl">Nomre</th>
+            <th class="w-xl">Fecha</th>
+            <th class="w-xl">Monto</th>
+            <th class="w-xl"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-expense let-rowIndex="rowIndex">
+          <tr class="hover:!bg-gray-200">
+            <td>{{ expense.name }}</td>
+            <td>{{ expense.date | date : "dd/MM/yyyy" }}</td>
+            <td>₡ {{ expense.mount }}</td>
+            <td>
+              <p-button
+                severity="danger"
+                icon="pi pi-trash"
+                (onClick)="removeExpense(rowIndex)"
+              />
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <div class="flex justify-around mt-5">
+      <p-button
+        (click)="closeModal()"
+        [tabIndex]="2"
+        severity="danger"
+        variant="outlined"
+        label="Cancelar"
+      />
+      <p-button
+        [disabled]="
+          (expensesList.get('expenses')?.value?.length || 0) < 1 &&
+          expenseForm.invalid
+        "
+        (click)="onSubmit()"
+        severity="info"
+        raised="true"
+        label="Guardar"
+      />
+    </div>
+  </div>
+</form>

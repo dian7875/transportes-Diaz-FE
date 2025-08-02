@@ -1,3 +1,43 @@
+<div>
+<div class="flex gap-x-2.5">
+  <div>
+    <label for="travelName">Destino</label>
+    <input
+      type="text"
+      class="w-full p-2 border bg-white rounded mb-2"
+      [ngModel]="destination()"
+      (ngModelChange)="destination.set($event)"
+      placeholder="---"
+    />
+  </div>
+
+  <div>
+    <label for="travelCode">ID/Albaran/Codigo</label>
+    <input
+      type="text"
+      class="w-full p-2 border bg-white rounded mb-2"
+      [ngModel]="travelCode()"
+      (ngModelChange)="travelCode.set($event)"
+      placeholder="----"
+    />
+  </div>
+
+  <div>
+    <label for="startDate">Fecha</label>
+    <p-datePicker
+      id="startDate"
+      class="text-white custom"
+      [ngModel]="date()"
+      (ngModelChange)="date.set($event)"
+      dataType="date"
+      placeholder="dd/mm/yy"
+      dateFormat="dd/mm/yy"
+      showClear="true"
+    />
+  </div>
+</div>
+</div>
+
 <p-table
   [value]="travels.data()?.data || []"
   [paginator]="true"
@@ -34,11 +74,15 @@
       <td>
         <div class="p-button-group flex gap-x-2 w-full">
           <p-button
+            severity="success"
+            icon="pi pi-wallet"
+            (click)="openAddExpense(travels.truck.plate, travels.id)"
+          />
+          <p-button
             severity="info"
             icon="pi pi-eye"
             (click)="openInfoTravelModal(travels)"
           />
-          <!--       <p-button severity="warn" icon="pi pi-file-edit" />-->
           <p-button
             severity="danger"
             icon="pi pi-trash"

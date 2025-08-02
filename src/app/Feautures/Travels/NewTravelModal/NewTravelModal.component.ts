@@ -1,5 +1,6 @@
+import { Expense } from './../Travel';
 import { DialogRef } from '@angular/cdk/dialog';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, formatDate } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import {
   ReactiveFormsModule,
@@ -19,6 +20,8 @@ import { ClientsService } from '../../MyClients/clients.service';
 import { DriversService } from '../../Drivers/driver.service';
 import { from } from 'rxjs';
 import { TruckServiceService } from '../../Trucks/TruckService.service';
+import { TableModule } from 'primeng/table';
+import { format } from 'path';
 
 interface newTravel {
   travelCode: string;
@@ -43,12 +46,14 @@ interface newTravel {
     SelectModule,
     InputNumber,
     CheckboxModule,
+    TableModule,
   ],
   providers: [DatePipe],
 })
 export class NewTravelModalComponent implements OnInit {
   queryClient = inject(QueryClient);
   travelForm: FormGroup;
+  expenseForm: FormGroup;
   truckService = inject(TruckServiceService);
   clientService = inject(ClientsService);
   driverService = inject(DriversService);
@@ -70,6 +75,12 @@ export class NewTravelModalComponent implements OnInit {
       amount: [null, [Validators.required]],
       isWithIV: [false],
       ExcludeIVA: [false],
+      expenses: [[]],
+    });
+    this.expenseForm = this.fb.group({
+      name: ['', Validators.required],
+      date: ['', Validators.required],
+      mount: ['', Validators.required],
     });
   }
 
@@ -77,6 +88,10 @@ export class NewTravelModalComponent implements OnInit {
     if (this.travelForm.invalid) {
       return;
     }
+    if (this.expenseForm.valid) {
+      this.addExpens();
+    }
+
     const travel = this.travelForm.value;
     const formattedDate = this.datePipe.transform(
       travel.travelDate,
@@ -106,6 +121,25 @@ export class NewTravelModalComponent implements OnInit {
   }
   closeModal() {
     this.dialogRef.close();
+  }
+
+  async addExpens() {
+    const expenFormValue = this.expenseForm.value;
+    const formattedDate = this.datePipe.transform(
+      expenFormValue.date,
+      'yyyy-MM-dd'
+    );
+    expenFormValue.date = formattedDate;
+    const expenses = this.travelForm.get('expenses')?.value || [];
+    expenses.push(expenFormValue);
+    this.travelForm.patchValue({ expenses });
+    this.expenseForm.reset();
+  }
+
+  async removeExpense(index: number) {
+    const expenses = [...this.travelForm.get('expenses')?.value];
+    expenses.splice(index, 1);
+    this.travelForm.patchValue({ expenses });
   }
 
   truckList = injectQuery(() => ({

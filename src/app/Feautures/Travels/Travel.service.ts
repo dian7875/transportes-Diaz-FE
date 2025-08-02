@@ -6,7 +6,6 @@ import axiosInstance from '../../Core/Config/axios.config';
 import axios from 'axios';
 import { ResponseData, newTravel } from './Travel';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -15,10 +14,24 @@ export class TravelService {
 
   private API_URL = environment.API_URL;
 
-  async getTravels(page: number): Promise<ResponseData> {
+  async getTravels(
+    page: number,
+    destination?: string,
+    date?: string,
+    travelCode?:string
+  ): Promise<ResponseData> {
     try {
-      const params = new HttpParams().set('page', page.toString());
+      let params = new HttpParams().set('page', page.toString());
 
+      if (destination) {
+        params = params.set('destination', destination.toString());
+      }
+      if (date) {
+        params = params.set('date', date.toString());
+      }
+      if (travelCode) {
+        params = params.set('travelCode', travelCode.toString());
+      }
       const response = await lastValueFrom(
         this.http.get<ResponseData>(`${this.API_URL}/travels`, { params })
       );

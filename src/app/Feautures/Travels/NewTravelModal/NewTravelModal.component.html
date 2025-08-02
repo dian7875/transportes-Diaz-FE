@@ -1,102 +1,195 @@
-<div class="p-6 bg-white rounded-xl shadow-xl w-96 text-black">
-  <h2 class="text-xl font-bold mb-4">Añadir nuevo trasnporte</h2>
-  <form [formGroup]="travelForm" (ngSubmit)="onSubmit()">
-    <label>Destino</label>
-    <input
-      formControlName="destination"
-      title="destination"
-      type="text"
-      class="w-full p-2 border rounded mb-4"
-      placeholder="EJ:Pinilla"
-      required
-    />
+<div class="text-black flex justify-center w-full">
+  <div class="p-6 rounded-xl w-3/6 bg-white">
+    <h2 class="text-xl font-bold mb-4">Añadir nuevo trasnporte</h2>
+    <form
+      [formGroup]="travelForm"
+      (ngSubmit)="onSubmit()"
+      class="grid grid-cols-2 p-2 gap-2 justify-start"
+    >
+      <fieldset>
+        <label>Destino</label>
+        <input
+          formControlName="destination"
+          title="destination"
+          type="text"
+          class="w-full p-2 border rounded mb-4"
+          placeholder="EJ:Pinilla"
+          required
+        />
 
-    <label>ID del viaje</label>
-    <input
-      formControlName="travelCode"
-      title="travelCode"
-      type="text"
-      class="w-full p-2 border rounded mb-4"
-      placeholder="EJ:cr000"
-      required
-    />
+        <label>ID del viaje</label>
+        <input
+          formControlName="travelCode"
+          title="travelCode"
+          type="text"
+          class="w-full p-2 border rounded mb-4"
+          placeholder="EJ:cr000"
+          required
+        />
 
-    <div class="mb-4">
-      <label>Monto</label>
-      <p-inputNumber
-        class="w-full custom-NI"
-        formControlName="amount"
-        mode="decimal"
-        [maxFractionDigits]="2"
-        placeholder="Ingrese el monto"
-      />
+        <label>Fecha</label>
+        <p-datePicker
+          formControlName="travelDate"
+          class="text-white custom mb-2"
+          required
+          dataType="date"
+          placeholder="dd/mm/yy"
+          dateFormat="dd/mm/yy"
+        />
+      </fieldset>
 
-      <div class="mt-2 flex items-center  justify-between">
-        <div>
-          <p-checkbox binary="true" formControlName="isWithIV"></p-checkbox>
-          <label class="ml-2">IVA incluido</label>
+      <fieldset>
+        <label>Conductor</label>
+        <p-select
+          [options]="driverList.data()"
+          optionLabel="name"
+          optionValue="id"
+          class="custom-select mb-4"
+          formControlName="driver_id"
+          placeholder="Seleccione el conductor"
+          required
+        />
+        <label>Camion</label>
+        <p-select
+          class="custom-select mb-4"
+          formControlName="truck_plate"
+          placeholder="Seleccione el camion"
+          [options]="truckList.data()"
+          optionLabel="name"
+          optionValue="plate"
+          required
+        />
+        <label>Cliente</label>
+        <p-select
+          class="custom-select mb-4"
+          formControlName="client_id"
+          placeholder="Seleccione el cliente"
+          [options]="clientList.data()"
+          optionLabel="name"
+          optionValue="id"
+          required
+        />
+      </fieldset>
+      <fieldset class="mb-4 col-span-2">
+        <label>Monto</label>
+        <p-inputNumber
+          class="w-full custom-NI"
+          formControlName="amount"
+          mode="decimal"
+          [maxFractionDigits]="2"
+          placeholder="Ingrese el monto"
+        />
+
+        <div class="mt-2 flex items-center justify-between">
+          <div>
+            <p-checkbox binary="true" formControlName="isWithIV"></p-checkbox>
+            <label class="ml-2">IVA incluido</label>
+          </div>
+          <div>
+            <p-checkbox binary="true" formControlName="ExcludeIVA"></p-checkbox>
+            <label class="ml-2">Excento de IVA</label>
+          </div>
         </div>
-        <div>
-          <p-checkbox binary="true" formControlName="ExcludeIVA"></p-checkbox>
-          <label class="ml-2">Excento de IVA</label>
-        </div>
+      </fieldset>
+
+      <div
+        class="flex content-start justify-between col-span-2 gap-2 items-end"
+      >
+        <details>
+          <summary>Gastos</summary>
+          <div [formGroup]="expenseForm">
+            <fieldset class="flex gap-2 items-end">
+              <div>
+                <label for="name">Nombre</label>
+                <input
+                  formControlName="name"
+                  type="text"
+                  class="w-full p-2 border rounded mb-2"
+                  placeholder="EJ:Chofer"
+                  required
+                />
+              </div>
+              <div>
+                <label for="mount">Monto</label>
+                <p-inputNumber
+                  formControlName="mount"
+                  class="w-full custom-NI mb-2"
+                  mode="decimal"
+                  [maxFractionDigits]="2"
+                  placeholder="Ingrese monto del gasto"
+                />
+              </div>
+              <div>
+                <label for="date">Fecha</label>
+                <p-datePicker
+                  formControlName="date"
+                  class="text-white custom mb-2"
+                  required
+                  dataType="date"
+                  placeholder="dd/mm/yy"
+                  dateFormat="dd/mm/yy"
+                />
+              </div>
+              <p-button
+                [disabled]="expenseForm.invalid"
+                class="mb-2"
+                (onClick)="addExpens()"
+                type="button"
+              >
+                <i class="pi pi-check" style="color: slateblue"></i>
+              </p-button>
+            </fieldset>
+          </div>
+          <div *ngIf="(travelForm.get('expenses')?.value?.length || 0) > 0">
+            <p-table
+              [scrollable]="true"
+              scrollHeight="120px"
+              [value]="travelForm.get('expenses')?.value"
+            >
+              <ng-template pTemplate="header">
+                <tr>
+                  <th class="w-xl">Nomre</th>
+                  <th class="w-xl">Fecha</th>
+                  <th class="w-xl">Monto</th>
+                  <th class="w-xl"></th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-expense let-rowIndex="rowIndex">
+                <tr class="hover:!bg-gray-200">
+                  <td>{{ expense.name }}</td>
+                  <td>{{ expense.date | date : "dd/MM/yyyy" }}</td>
+                  <td>₡ {{ expense.mount }}</td>
+                  <td>
+                    <p-button
+                      severity="danger"
+                      icon="pi pi-trash"
+                      (onClick)="removeExpense(rowIndex)"
+                    />
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </details>
       </div>
-    </div>
 
-    <label>Fecha</label>
-    <p-datePicker
-      formControlName="travelDate"
-      class="text-white custom mb-2"
-      required
-      dataType="date"
-      placeholder="dd/mm/yy"
-      dateFormat="dd/mm/yy"
-    />
-    <label>Conductor</label>
-    <p-select
-      [options]="driverList.data()"
-      optionLabel="name"
-      optionValue="id"
-      class="custom-select mb-2"
-      formControlName="driver_id"
-      placeholder="Seleccione el conductor"
-      required
-    />
-    <label>Camion</label>
-    <p-select
-      class="custom-select mb-2"
-      formControlName="truck_plate"
-      placeholder="Seleccione el camion"
-      [options]="truckList.data()"
-      optionLabel="name"
-      optionValue="plate"
-      required
-    />
-    <label>Cliente</label>
-    <p-select
-      class="custom-select mb-2"
-      formControlName="client_id"
-      placeholder="Seleccione el cliente"
-      [options]="clientList.data()"
-      optionLabel="name"
-      optionValue="id"
-      required
-    />
-    <div class="flex justify-around mt-5">
-      <p-button
-        [tabIndex]="2"
-        (onClick)="closeModal()"
-        severity="danger"
-        variant="outlined"
-        label="Cancelar"
-      />
-      <p-button
-        type="submit"
-        severity="info"
-        raised="true"
-        label="Guardar"
-        [disabled]="travelForm.invalid"
-      />
-    </div>
-  </form>
+      <div class="flex justify-around mt-5 col-span-2">
+        <p-button
+          [tabIndex]="2"
+          (onClick)="closeModal()"
+          severity="danger"
+          variant="outlined"
+          label="Cancelar"
+        />
+        <p-button
+          type="submit"
+          severity="info"
+          raised="true"
+          label="Guardar"
+          [disabled]="travelForm.invalid"
+
+        />
+      </div>
+    </form>
+  </div>
 </div>
