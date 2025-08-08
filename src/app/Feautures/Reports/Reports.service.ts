@@ -74,7 +74,7 @@ export class ReportsService {
       const link = document.createElement('a');
       link.href = url;
 
-      link.setAttribute('download', 'Facturas_Pendientes.xlsx');
+      link.setAttribute('download', `Facturas_Pendientes_${new Date().toLocaleDateString()}.xlsx`);
 
       document.body.appendChild(link);
       link.click();
